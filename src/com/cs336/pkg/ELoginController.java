@@ -44,6 +44,11 @@ public class ELoginController extends HttpServlet {
 				System.out.println(nameResult.getString("first_name"));
 				session.setAttribute("name", nameResult.getString("first_name"));
 				session.setAttribute("username", username);
+				session.setAttribute("isEmployee", true);
+				session.setAttribute("isAdmin", false);
+				if (username.equals("admin")) {
+					session.setAttribute("isAdmin", true);
+				}
 				db.closeConnection(con);
 				response.sendRedirect("index.jsp");
 			}

@@ -6,8 +6,19 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Reservations</title>
+<title>Admin Page</title>
 </head>
 <body>
+<%
+if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("isAdmin"))) {
+	System.out.println("hello admin");
+%>
+<!-- PUT EVERYTHING ADMINS SHOULD SEE IN THIS IF STATEMENT -->
+<h1>Hello Admin</h1>
+<% }
+else {
+	System.out.println("Not an admin");
+} %>
+
 </body>
 </html>

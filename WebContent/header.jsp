@@ -33,14 +33,18 @@
 							href="schedule.jsp">Train Schedules</a></li>
 						<li class="nav-item"><a class="nav-link text-right"
 							href="reservations.jsp">Reservations</a></li>
-						<li class="nav-item"><a class="nav-link text-right"
-							href="contact.jsp">Contact Us</a></li>
-						<% 
-						String username = (String)session.getAttribute("username");
-						if (username != null && username.equals("admin")) {
+						<%
+						if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("isAdmin"))) {
 						%>
 						<li class="nav-item"><a class="nav-link text-right"
 							href="admin.jsp">Admin Page</a></li>
+						<li class="nav-item"><a class="nav-link text-right"
+							href="customerRep.jsp">Customer Representative</a></li>
+						<% }
+						else if (session.getAttribute("isEmployee") != null && ((boolean) session.getAttribute("isEmployee"))) {
+						%>
+						<li class="nav-item"><a class="nav-link text-right"
+							href="customerRep.jsp">Customer Representative</a></li>
 						<% } %>
 					</ul>
 					<% if ((String)session.getAttribute("name") == null) { %>

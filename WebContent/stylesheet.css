@@ -70,13 +70,11 @@ body {
 	font-style: oblique;
 }
 
-.center
-{
+.center {
 	text-align: center;
 }
 
-.indented-checkbox-text
-{
+.indented-checkbox-text {
   margin-left: 2em;
   display: block;
   position: relative;
