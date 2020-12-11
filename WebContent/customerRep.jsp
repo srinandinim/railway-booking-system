@@ -17,8 +17,9 @@ if (session.getAttribute("isEmployee") != null && ((boolean) session.getAttribut
 <h1>Hello Admin/Employee</h1>
 <% }
 else {
-	System.out.println("Not an employee or admin");
-} %>
+	System.out.println("Not an employee or admin"); %>
+<h1>You are not an employee or admin.</h1>
+<% } %>
 
 </body>
 </html>
