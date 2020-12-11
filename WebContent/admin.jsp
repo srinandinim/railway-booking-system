@@ -18,7 +18,7 @@ if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("
 <% }
 else {
 	System.out.println("Not an admin"); %>
-<h1>You are not an admin.</h1>
+<h1>You are not an admin :(.</h1>
 <% } %>
 
 </body>
