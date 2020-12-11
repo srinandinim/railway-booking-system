@@ -5,12 +5,7 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>CS336Project</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<description></description>
@@ -32,5 +27,16 @@
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
 		<url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>ELoginController</display-name>
+		<servlet-name>ELoginController</servlet-name>
+		<servlet-class>com.cs336.pkg.ELoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ELoginController</servlet-name>
+		<url-pattern>/ELoginController</url-pattern>
 	</servlet-mapping>
 </web-app>

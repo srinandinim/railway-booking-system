@@ -11,14 +11,12 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class RegistrationController
  */
-public class LoginController extends HttpServlet {
+public class ELoginController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
 		
 		try {
-			
-			//Get the database connection
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();		
 
@@ -27,7 +25,7 @@ public class LoginController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
-			String correctPassword = "SELECT password FROM customer WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
+			String correctPassword = "SELECT password FROM employee WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
 			
 			ResultSet result = stmt.executeQuery(correctPassword);
 			boolean isValid = result.next();
@@ -38,7 +36,7 @@ public class LoginController extends HttpServlet {
 			else {
 				System.out.println("You have been logged in!");
 				
-				String nameQuery = "SELECT first_name FROM customer WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
+				String nameQuery = "SELECT first_name FROM employee WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
 				ResultSet nameResult = stmt.executeQuery(nameQuery);
 				
 				nameResult.next();
@@ -47,7 +45,7 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("name", nameResult.getString("first_name"));
 				session.setAttribute("username", username);
 				db.closeConnection(con);
-				response.sendRedirect("reservations.jsp");
+				response.sendRedirect("index.jsp");
 			}
 			db.closeConnection(con);
 		}
