@@ -35,7 +35,7 @@
 			
 			<label for="dest">Destination</label> 
 			<select id="dest" name="dest" required>
-				<option value="none" selected disabled> Select An Origin </option>
+				<option value="none" selected disabled> Select An Destination </option>
 				<%
 					result = stmt.executeQuery(stationNames);
 					
