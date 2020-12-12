@@ -33,11 +33,13 @@
 							href="schedule.jsp">Train Schedules</a></li>
 						<li class="nav-item"><a class="nav-link text-right"
 							href="reservations.jsp">Reservations</a></li>
+						<li class="nav-item"><a class="nav-link text-right"
+							href="contact.jsp">Contact Us</a></li>
 						<%
 						if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("isAdmin"))) {
 						%>
 						<li class="nav-item"><a class="nav-link text-right"
-							href="admin.jsp">Admin Page</a></li>
+							href="admin.jsp">Admin</a></li>
 						<li class="nav-item"><a class="nav-link text-right"
 							href="customerRep.jsp">Customer Representative</a></li>
 						<% }
