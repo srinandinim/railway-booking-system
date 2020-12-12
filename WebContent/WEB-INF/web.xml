@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>CS336Project</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description></description>
+		<display-name>RegistrationController</display-name>
+		<servlet-name>RegistrationController</servlet-name>
+		<servlet-class>com.cs336.pkg.RegistrationController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegistrationController</servlet-name>
+		<url-pattern>/RegistrationController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>LoginController</display-name>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.cs336.pkg.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>ELoginController</display-name>
+		<servlet-name>ELoginController</servlet-name>
+		<servlet-class>com.cs336.pkg.ELoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ELoginController</servlet-name>
+		<url-pattern>/ELoginController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>ReservationsController</display-name>
+		<servlet-name>ReservationsController</servlet-name>
+		<servlet-class>com.cs336.pkg.ReservationsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationsController</servlet-name>
+		<url-pattern>/ReservationsController</url-pattern>
+	</servlet-mapping>
+</web-app>
