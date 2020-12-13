@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -14,7 +14,7 @@
 
 	<div class="form">
 		<br>
-		<h4 class="center"> Customer Login </h4>
+		<h4 class="center">Customer Login</h4>
 		<p class="center">To make a new account, click register.</p>
 		<form action="LoginController" method="POST">
 			<input type="text" name="username" placeholder="Username" required>
@@ -25,7 +25,8 @@
 		<br>
 		<button onclick="location.href='register.jsp';">Register</button>
 		<br> <br>
-		<button onclick="location.href='employeelogin.jsp';">Employee Log-In</button>
+		<button onclick="location.href='employeelogin.jsp';">Employee
+			Log-In</button>
 	</div>
 
 </body>

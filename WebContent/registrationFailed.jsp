@@ -25,6 +25,8 @@
 				seriously have to mention this?)</li>
 			<li>You must be born after 1890 to ride with us. Train unsafe
 				for some 19th century folks.</li>
+			<li>If you're an employee, your SSN should be inputed as XXX-XX-XXXX. Don't be afraid, we 
+			don't know how to do bad things with an SSN so we won't do anything with yours.</li>
 			<li>If all else fails, your username has already been taken. Be
 				more original.</li>
 		</ul>
