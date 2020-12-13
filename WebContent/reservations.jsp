@@ -65,12 +65,8 @@
 		</select> 
 		<button type="submit" onclick="verifySelections()" formmethod="POST">Reserve</button>
 	</form>
-	<div id="penis1">
-		
-	</div>
 	<script>
 				function verifySelections(){
-					var thePenis = document.getElementById("penis1");
 					var originSelected = document.getElementById('origin');
 					originSelected = originSelected.options[originSelected.selectedIndex].text;
 					var destinationSelected = document.getElementById('dest');

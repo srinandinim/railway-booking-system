@@ -14,9 +14,8 @@
 	<div class="form">
 		<h1>Train Schedules</h1>
 		<form action="ScheduleController" method="POST">
-			<label for="origin">Origin</label> <select id="origin" name="origin"
-				required>
-				<option value="none" selected disabled>Select An Origin</option>
+			<label for="origin">Origin</label> <select name="origin" id="origin" required>
+				<option value="" selected disabled>Select An Origin</option>
 				<%
 					try {
 					ApplicationDB db = new ApplicationDB();
@@ -32,9 +31,8 @@
 				<%
 					}
 				%>
-			</select> <label for="dest">Destination</label> <select id="dest" name="dest"
-				required>
-				<option value="none" selected disabled>Select An
+			</select> <label for="dest">Destination</label> <select id="dest" name="dest" required>
+				<option value="" selected disabled>Select An
 					Destination</option>
 				<%
 					result = stmt.executeQuery(stationNames);
