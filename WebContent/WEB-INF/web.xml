@@ -50,4 +50,70 @@
 		<servlet-name>ReservationsController</servlet-name>
 		<url-pattern>/ReservationsController</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>AddCustomerController</display-name>
+		<servlet-name>AddCustomerController</servlet-name>
+		<servlet-class>com.cs336.pkg.AddCustomerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddCustomerController</servlet-name>
+		<url-pattern>/AddCustomerController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>DeleteCustomerController</display-name>
+		<servlet-name>DeleteCustomerController</servlet-name>
+		<servlet-class>com.cs336.pkg.DeleteCustomerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteCustomerController</servlet-name>
+		<url-pattern>/DeleteCustomerController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>EditCustomerController</display-name>
+		<servlet-name>EditCustomerController</servlet-name>
+		<servlet-class>com.cs336.pkg.EditCustomerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditCustomerController</servlet-name>
+		<url-pattern>/EditCustomerController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>SalesReportsController</display-name>
+		<servlet-name>SalesReportsController</servlet-name>
+		<servlet-class>com.cs336.pkg.SalesReportsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SalesReportsController</servlet-name>
+		<url-pattern>/SalesReportsController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>ListReservationsController</display-name>
+		<servlet-name>ListReservationsController</servlet-name>
+		<servlet-class>com.cs336.pkg.ListReservationsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListReservationsController</servlet-name>
+		<url-pattern>/ListReservationsController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>AdminRevenueListingController</display-name>
+		<servlet-name>AdminRevenueListingController</servlet-name>
+		<servlet-class>com.cs336.pkg.AdminRevenueListingController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminRevenueListingController</servlet-name>
+		<url-pattern>/AdminRevenueListingController</url-pattern>
+	</servlet-mapping>
 </web-app>
