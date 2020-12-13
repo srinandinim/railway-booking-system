@@ -69,6 +69,7 @@ public class ScheduleController extends HttpServlet {
 			resultSet.next();
 			request.setAttribute("destination", resultSet.getString(1));
 			
+			request.setAttribute("travelDate", travelDate);
 			request.setAttribute("valid-trains", trains);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("schedule.jsp");

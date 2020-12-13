@@ -1,5 +1,9 @@
 package com.cs336.pkg;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class Train {
 	
 	String transitLine;
@@ -53,6 +57,22 @@ public class Train {
 	}
 	public void setFare(int fare) {
 		this.fare = fare;
+	}
+	
+	public long getDuration() {
+		String time1 = origin.split(" ")[1];
+		String time2 = destination.split(" ")[1];
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Date date1 = format.parse(time1);
+			Date date2 = format.parse(time2);
+			long difference = date2.getTime() - date1.getTime(); 
+			return (long) Math.ceil((difference/60000));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public String toString() {
