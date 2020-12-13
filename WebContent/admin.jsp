@@ -83,10 +83,13 @@ table, th, tr, td {
 		<h4>Edit an existing Representative (make sure Representative's
 			SSN matches and username is unique)</h4>
 		<form action="EditCustomerController" method="POST">
+			<label for="ssn">Enter the SSN of the Customer Representative you would like to modify.</label>
+			<input
+				type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)" required>
+			<br><br>
 			<input type="text" name="firstName" placeholder="First Name"
 				class="editVerify"> <input type="text" name="lastName"
-				placeholder="Last Name" class="editVerify"> <input
-				type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)" required>
+				placeholder="Last Name" class="editVerify"> 
 			<input type="text" name="username" placeholder="Username"
 				class="editVerify"> <input type="password" name="password"
 				placeholder="Password" class="editVerify">

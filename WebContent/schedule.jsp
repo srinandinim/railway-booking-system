@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.cs336.pkg.*"%>
-<%@ page import="java.io.*,java.util.*, java.sql.*"%>
+<%@ page import="java.io.*,java.util.*, java.sql.*, java.text.SimpleDateFormat, java.util.Date"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8" />
 <title>Train Schedules</title>
+<style>
+th, td{
+padding: 5px;
+}
+</style>
 </head>
 <body>
 	<div class="form">
@@ -62,15 +67,17 @@
 			<br>
 			<p class="form" style="text-align: center">Origin: <%=request.getAttribute("origin")%> </p>
 			<p class="form" style="text-align: center">Destination: <%=request.getAttribute("destination")%></p>
+			<p class="form" style="text-align: center">Date of Travel: <%=request.getAttribute("travelDate")%></p>
 			<br>
 			<% if (std.size() != 0) {
 		%>
-		<table border="1" width="800" align="center">
+		<table border="1" width="900" align="center" border-spacing="40px">
 			<tr style="text-align: center">
 				<th><b>Train</b></th>
 				<th><b>Departure Time</b></th>
 				<th><b>Arrival Time</b></th>
 				<th><b>Stops</b></th>
+				<th><b>Duration</b></th>
 				<th><b>Fare</b></th>
 			</tr>
 			<%
@@ -81,6 +88,7 @@
 				<td><%=s.getOrigin().substring(0, s.getOrigin().length() - 3) %></td>
 				<td><%=s.getDestination().substring(0, s.getDestination().length() - 3) %></td>
 				<td><%=s.getStops() %></td>
+				<td><%=s.getDuration() + " min"%></td>
 				<td><%="$" + s.getFare() %></td>
 			</tr>
 			<%}%>
