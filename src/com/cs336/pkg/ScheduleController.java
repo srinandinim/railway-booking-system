@@ -79,7 +79,7 @@ public class ScheduleController extends HttpServlet {
 
 				ResultSet fareSet = stmt.executeQuery(fareQuery);
 				fareSet.next();
-				orgDestTrains.get(i).setFare(fareSet.getInt(1));
+				orgDestTrains.get(i).setFare(fareSet.getDouble(1));
 			}
 
 
@@ -103,8 +103,8 @@ public class ScheduleController extends HttpServlet {
 				}
 
 				while (resultSet.next()) {
-					destOriginTrains.add(new Train(resultSet.getString(1), resultSet.getInt(2), originStationId,
-							destStationId, resultSet.getString(3), resultSet.getString(4)));
+					destOriginTrains.add(new Train(resultSet.getString(1), resultSet.getInt(2), destStationId,
+							originStationId, resultSet.getString(3), resultSet.getString(4)));
 				}
 
 				for (int i = 0; i < destOriginTrains.size(); i++) {
@@ -132,7 +132,7 @@ public class ScheduleController extends HttpServlet {
 							+ destOriginTrains.get(i).getDestinationDT() + "\") t4;";
 					ResultSet fareSet = stmt.executeQuery(fareQuery);
 					fareSet.next();
-					destOriginTrains.get(i).setFare(fareSet.getInt(1));
+					destOriginTrains.get(i).setFare(fareSet.getDouble(1));
 				}
 
 				request.setAttribute("dest-org-trains", destOriginTrains);
