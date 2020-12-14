@@ -76,7 +76,7 @@ public class ScheduleController extends HttpServlet {
 						+ orgDestTrains.get(i).getDestinationDT() + "\") t4;";
 				ResultSet fareSet = stmt.executeQuery(fareQuery);
 				fareSet.next();
-				orgDestTrains.get(i).setFare(fareSet.getInt(1));
+				orgDestTrains.get(i).setFare(fareSet.getDouble(1));
 			}
 
 			if (!tripType.equals("one-way")) {

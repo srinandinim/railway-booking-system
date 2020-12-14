@@ -13,7 +13,7 @@ public class Train {
 	String originDT;
 	String destinationDT;
 	String stops;
-	int fare;
+	double fare;
 	
 	public Train(String transitLine, int trainId, int origin, int destination, String originDT, String destinationDT) {
 		super();
@@ -55,10 +55,10 @@ public class Train {
 	public void setStops(String stops) {
 		this.stops = stops;
 	}
-	public int getFare() {
+	public double getFare() {
 		return fare;
 	}
-	public void setFare(int fare) {
+	public void setFare(double fare) {
 		this.fare = fare;
 	}
 	

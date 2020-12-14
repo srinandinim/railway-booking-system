@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 /**
  * Servlet implementation class ReservationsController
  */
@@ -18,6 +19,28 @@ public class ReservationsController extends HttpServlet {
 		
 		System.out.println (request.getParameter("origin-option"));
 		System.out.println (request.getParameter("dest-option"));
+		response.sendRedirect("reservations.jsp");
+		
+		try {
+			
+			String transitLine = request.getParameter("transitline");
+			
+			System.out.println(transitLine);
+			
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();		
+
+			Statement stmt = con.createStatement();
+			
+			//int originStationId = Integer.parseInt(request.getParameter("origin"));
+			
+		}
+		
+		catch (Exception e) {
+			System.out.print(e);
+		}
+		
+		
 		
 	}
 
