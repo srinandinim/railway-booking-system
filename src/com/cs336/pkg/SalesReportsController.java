@@ -70,7 +70,7 @@ public class SalesReportsController extends HttpServlet {
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
-			String getFareSQL = "SELECT sum(total_fare) FROM reservation WHERE MONTH(date_made)=" + SQLmonth + " AND YEAR(date_made)=" + SQLyear + ";";
+			String getFareSQL = "SELECT sum(total_fare) FROM reservation WHERE BINARY MONTH(date_made)=" + SQLmonth + " AND YEAR(date_made)=" + SQLyear + ";";
 			ResultSet result = stmt.executeQuery(getFareSQL);
 			while(result.next()) {
 				if(result.getString(1)!=null) {

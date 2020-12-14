@@ -295,6 +295,7 @@ table, th, tr, td {
 				<th>Date Made</th>
 				<th>Total Fare</th>
 				<th>Reservation Origin</th>
+				<th>Reservation Origin Datetime</th>
 				<th>Reservation Destination</th>
 				<th>Reservation Destination Datetime</th>
 				<th>Customer Username</th>
@@ -310,6 +311,7 @@ table, th, tr, td {
 				<td><%=s.getDateMade()%></td>
 				<td><%=s.getTotalFare()%></td>
 				<td><%=s.getReservationOrigin()%></td>
+				<td><%=s.getReservationOriginDatetime()%></td>
 				<td><%=s.getReservationDestination()%></td>
 				<td><%=s.getReservationDestinationDatetime()%></td>
 				<td><%=s.getCustomerUsername()%></td>
@@ -467,7 +469,7 @@ table, th, tr, td {
 			var editVerify = document.getElementByClassName('editVerify');
 			var i;
 			for (i = 0; i < editVerify.length; i++) {
-				if (x[i].text > 50) {
+				if (editVerify[i].text > 50) {
 					alert("Please make all string inputs' lengths less than or equal to 50 characters");
 				}
 			}

@@ -7,19 +7,21 @@ public class Reservation {
 	String dateMade;
 	String totalFare;
 	String reservationOrigin;
+	String reservationOriginDatetime;
 	String reservationDestination;
 	String reservationDestinationDatetime;
 	String customerUsername;
 	String transitLine;
 	String trainId;
 	
-	public Reservation (String reservationNumber, String fareType, String dateMade, String totalFare, String reservationOrigin,
+	public Reservation (String reservationNumber, String fareType, String dateMade, String totalFare, String reservationOrigin, String reservationOriginDatetime,
 			String reservationDestination, String reservationDestinationDatetime, String customerUsername, String transitLine, String trainId) {
 		this.reservationNumber = reservationNumber;
 		this.fareType = fareType;
 		this.dateMade = dateMade;
 		this.totalFare = totalFare;
 		this.reservationOrigin = reservationOrigin;
+		this.reservationOriginDatetime = reservationOriginDatetime;
 		this.reservationDestination = reservationDestination;
 		this.reservationDestinationDatetime = reservationDestinationDatetime;
 		this.customerUsername = customerUsername;
@@ -114,6 +116,14 @@ public class Reservation {
 				+ ", reservationDestination=" + reservationDestination + ", reservationDestinationDatetime="
 				+ reservationDestinationDatetime + ", customerUsername=" + customerUsername + ", transitLine="
 				+ transitLine + ", trainId=" + trainId + "]";
+	}
+
+	public String getReservationOriginDatetime() {
+		return reservationOriginDatetime;
+	}
+
+	public void setReservationOriginDatetime(String reservationOriginDatetime) {
+		this.reservationOriginDatetime = reservationOriginDatetime;
 	}
 	
 	

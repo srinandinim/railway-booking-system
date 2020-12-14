@@ -146,4 +146,37 @@
     <servlet-name>ReplyQuestionController</servlet-name>
     <url-pattern>/ReplyQuestionController</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+		<description></description>
+		<display-name>CusRepTrainScheduleController</display-name>
+		<servlet-name>CusRepTrainScheduleController</servlet-name>
+		<servlet-class>com.cs336.pkg.CusRepTrainScheduleController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CusRepTrainScheduleController</servlet-name>
+		<url-pattern>/CusRepTrainScheduleController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>ListTrainSchedulesController</display-name>
+		<servlet-name>ListTrainSchedulesController</servlet-name>
+		<servlet-class>com.cs336.pkg.ListTrainSchedulesController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListTrainSchedulesController</servlet-name>
+		<url-pattern>/ListTrainSchedulesController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>CusRepReservationSearchController</display-name>
+		<servlet-name>CusRepReservationSearchController</servlet-name>
+		<servlet-class>com.cs336.pkg.CusRepReservationSearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CusRepReservationSearchController</servlet-name>
+		<url-pattern>/CusRepReservationSearchController</url-pattern>
+	</servlet-mapping>
 </web-app>

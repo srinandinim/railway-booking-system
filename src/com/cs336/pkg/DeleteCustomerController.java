@@ -26,7 +26,7 @@ public class DeleteCustomerController extends HttpServlet {
 		Statement stmtCheckSSN;
 		try {
 			stmtCheckSSN = con.createStatement();
-			String SSNChecker = "SELECT * FROM employee WHERE ssn=" + "\'" + ssn + "\'";
+			String SSNChecker = "SELECT * FROM employee WHERE BINARY ssn=" + "\'" + ssn + "\'";
 			ResultSet result = stmtCheckSSN.executeQuery(SSNChecker);
 			boolean isValid = result.next();
 			if (isValid) {
@@ -34,7 +34,7 @@ public class DeleteCustomerController extends HttpServlet {
 				try {
 					stmt = con.createStatement();
 
-					String sqlString = "DELETE FROM employee WHERE ssn = \'" + ssn + "\';";
+					String sqlString = "DELETE FROM employee WHERE BINARY ssn = \'" + ssn + "\';";
 
 					PreparedStatement insertEmployee = con.prepareStatement(sqlString);
 					insertEmployee.executeUpdate();
