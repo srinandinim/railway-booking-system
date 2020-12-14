@@ -33,13 +33,13 @@ public class ListReservationsController extends HttpServlet {
 			stmt=con.createStatement();
 			String getSQL = null;
 			if(transitLine==null && userName!=null) {
-				getSQL = "SELECT * FROM reservation WHERE customer_username = \'" + userName + "\';";
+				getSQL = "SELECT * FROM reservation WHERE BINARY customer_username = \'" + userName + "\';";
 			}
 			else if(transitLine!=null && userName==null) {
-				getSQL = "SELECT * FROM reservation WHERE transit_line = \'" + transitLine + "\';";
+				getSQL = "SELECT * FROM reservation WHERE BINARY transit_line = \'" + transitLine + "\';";
 			}
 			else if(transitLine!=null && userName!=null) {
-				getSQL = "SELECT * FROM reservation WHERE transit_line = \'" + transitLine + "\' AND customer_username = \'" + userName + "\';";
+				getSQL = "SELECT * FROM reservation WHERE BINARY transit_line = \'" + transitLine + "\' AND customer_username = \'" + userName + "\';";
 			}
 			if(getSQL!=null) {
 				ResultSet result = stmt.executeQuery(getSQL);
@@ -49,20 +49,22 @@ public class ListReservationsController extends HttpServlet {
 					String reservationDestination = null;
 					Statement stmt1 = con.createStatement();
 					
-					String getOrigin = "SELECT name FROM station WHERE station_id =" + result.getInt(5) + ";";
+					String getOrigin = "SELECT name FROM station WHERE BINARY station_id =" + result.getInt(5) + ";";
 					ResultSet result1 = stmt1.executeQuery(getOrigin);
 					while(result1.next()) {
 						reservationOrigin = result1.getString(1);
 					}
+					reservationOrigin = "Station Name: " + reservationOrigin + ", Station ID: " + result.getString(5);
 					
-					String getDestination = "SELECT name FROM station WHERE station_id =" + result.getInt(6) + ";";
+					String getDestination = "SELECT name FROM station WHERE BINARY station_id =" + result.getInt(7) + ";";
 					ResultSet result2 = stmt1.executeQuery(getDestination);
 					while(result2.next()) {
 						reservationDestination = result2.getString(1);
 					}
+					reservationDestination = "Station Name: " + reservationDestination + ", Station ID: " + result.getString(7);
 					
 					reservations.add(new Reservation(result.getString(1), result.getString(2),result.getString(3),result.getString(4),reservationOrigin, 
-							reservationDestination, result.getString(7),result.getString(8),result.getString(9),result.getString(10)));
+							result.getString(6), reservationDestination, result.getString(8),result.getString(9),result.getString(10),result.getString(11)));
 				}
 				request.setAttribute("valid-reservations", reservations);
 			}

@@ -31,7 +31,7 @@ public class AddCustomerController extends HttpServlet {
 		Statement stmtCheckUser;
 		try {
 			stmtCheckUser = con.createStatement();
-			String usernameChecker = "SELECT * FROM employee WHERE username=" + "\'" + username + "\'";
+			String usernameChecker = "SELECT * FROM employee WHERE BINARY username=" + "\'" + username + "\'";
 			ResultSet result = stmtCheckUser.executeQuery(usernameChecker);
 			boolean isValid = result.next();
 			if (isValid) {
@@ -45,7 +45,7 @@ public class AddCustomerController extends HttpServlet {
 		}
 		try {
 			stmtCheckUser = con.createStatement();
-			String SSNChecker = "SELECT * FROM employee WHERE ssn=" + "\'" + ssn + "\'";
+			String SSNChecker = "SELECT * FROM employee WHERE BINARY ssn=" + "\'" + ssn + "\'";
 			ResultSet result = stmtCheckUser.executeQuery(SSNChecker);
 			boolean isValid = result.next();
 			if (isValid) {

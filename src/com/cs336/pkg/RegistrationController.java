@@ -118,7 +118,7 @@ public class RegistrationController extends HttpServlet {
 		//end of checking birthday
 		
 		//check to make sure username is unique
-		String usernameChecker = "SELECT * FROM customer WHERE username=" + "\'" + username + "\'";
+		String usernameChecker = "SELECT * FROM customer WHERE BINARY username=" + "\'" + username + "\'";
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
