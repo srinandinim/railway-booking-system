@@ -96,8 +96,8 @@ th, td {
 			%>
 			<tr style="text-align: center">
 				<td><%=s.getTransitLine() + " #" + s.getTrainId()%></td>
-				<td><%=s.getOrigin().substring(0, s.getOrigin().length() - 3)%></td>
-				<td><%=s.getDestination().substring(0, s.getDestination().length() - 3)%></td>
+				<td><%=s.getOrigin().substring(0, s.getOrigin().length() - 3).split(" ")[1]%></td>
+				<td><%=s.getDestination().substring(0, s.getDestination().length() - 3).split(" ")[1]%></td>
 				<td><%=s.getStops()%></td>
 				<td><%=s.getDuration() + " min"%></td>
 				<td><%="$" + s.getFare()%></td>
