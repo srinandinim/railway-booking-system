@@ -30,14 +30,14 @@ public class EditCustomerController extends HttpServlet {
 		Statement stmtCheckSSN;
 		try {
 			stmtCheckSSN = con.createStatement();
-			String SSNChecker = "SELECT * FROM employee WHERE ssn=" + "\'" + ssn + "\'";
+			String SSNChecker = "SELECT * FROM employee WHERE BINARY ssn=" + "\'" + ssn + "\'";
 			ResultSet result = stmtCheckSSN.executeQuery(SSNChecker);
 			boolean isValid = result.next();
 			if (isValid) {
 				if (firstName.length()!=0 && firstName.length() <= 50) {
 					try {
 
-						String sqlString = "UPDATE employee SET first_name= \'" + firstName + "\' WHERE ssn = \'" + ssn
+						String sqlString = "UPDATE employee SET first_name= \'" + firstName + "\' WHERE BINARY ssn = \'" + ssn
 								+ "\';";
 
 						PreparedStatement editEmployee = con.prepareStatement(sqlString);
@@ -51,7 +51,7 @@ public class EditCustomerController extends HttpServlet {
 				if (lastName.length()!=0 && lastName.length() <= 50) {
 					try {
 
-						String sqlString = "UPDATE employee SET last_name= \'" + lastName + "\' WHERE ssn = \'" + ssn
+						String sqlString = "UPDATE employee SET last_name= \'" + lastName + "\' WHERE BINARY ssn = \'" + ssn
 								+ "\';";
 
 						PreparedStatement editEmployee = con.prepareStatement(sqlString);
@@ -65,11 +65,11 @@ public class EditCustomerController extends HttpServlet {
 				if(username.length()!=0 && username.length() <= 50) {
 					try {
 						Statement stmt = con.createStatement();
-						String usernameChecker = "SELECT * FROM employee WHERE username=" + "\'" + username + "\' AND ssn<> \'" + ssn + "\';";
+						String usernameChecker = "SELECT * FROM employee WHERE BINARY username=" + "\'" + username + "\' AND ssn<> \'" + ssn + "\';";
 						ResultSet usernameResult = stmtCheckSSN.executeQuery(usernameChecker);
 						boolean isExistingUsername = usernameResult.next();
 						if(!isExistingUsername) {
-							String sqlString = "UPDATE employee SET username= \'" + username + "\' WHERE ssn = \'" + ssn + "\';";
+							String sqlString = "UPDATE employee SET username= \'" + username + "\' WHERE BINARY ssn = \'" + ssn + "\';";
 							PreparedStatement editEmployee = con.prepareStatement(sqlString);
 							editEmployee.executeUpdate();
 						}
@@ -82,7 +82,7 @@ public class EditCustomerController extends HttpServlet {
 				if(password.length()!=0 && password.length() <= 50) {
 					try {
 
-						String sqlString = "UPDATE employee SET password= \'" + password + "\' WHERE ssn = \'" + ssn + "\';";
+						String sqlString = "UPDATE employee SET password= \'" + password + "\' WHERE BINARY ssn = \'" + ssn + "\';";
 
 						PreparedStatement editEmployee = con.prepareStatement(sqlString);
 						editEmployee.executeUpdate();

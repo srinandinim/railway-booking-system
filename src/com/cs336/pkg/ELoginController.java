@@ -25,7 +25,7 @@ public class ELoginController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
-			String correctPassword = "SELECT password FROM employee WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
+			String correctPassword = "SELECT password FROM employee WHERE BINARY username=" + "\'" + username + "\'" + " LIMIT 1";
 			
 			ResultSet result = stmt.executeQuery(correctPassword);
 			boolean isValid = result.next();
@@ -36,7 +36,7 @@ public class ELoginController extends HttpServlet {
 			else {
 				System.out.println("You have been logged in!");
 				
-				String nameQuery = "SELECT first_name FROM employee WHERE username=" + "\'" + username + "\'" + " LIMIT 1";
+				String nameQuery = "SELECT first_name FROM employee WHERE BINARY username=" + "\'" + username + "\'" + " LIMIT 1";
 				ResultSet nameResult = stmt.executeQuery(nameQuery);
 				
 				nameResult.next();
