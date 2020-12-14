@@ -116,6 +116,33 @@ public class ReservationsController extends HttpServlet {
 		}
 		
 		
+<<<<<<< HEAD
+=======
+		System.out.println (request.getParameter("origin-option"));
+		System.out.println (request.getParameter("dest-option"));
+		response.sendRedirect("reservations.jsp");
+		
+		try {
+			
+			String transitLine = request.getParameter("transitline");
+			
+			System.out.println(transitLine);
+			
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();		
+
+			Statement stmt = con.createStatement();
+			
+			//int originStationId = Integer.parseInt(request.getParameter("origin"));
+			
+		}
+		
+		catch (Exception e) {
+			System.out.print(e);
+		}
+		
+		
+>>>>>>> 7682796 (View and delete reservations)
 		
 	}
 

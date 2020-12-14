@@ -191,4 +191,16 @@
 		<url-pattern>/CusRepReservationSearchController</url-pattern>
 >>>>>>> 5fa46c7 (Added Customer Rep Page)
 	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>DeleteReservationController</display-name>
+		<servlet-name>DeleteReservationController</servlet-name>
+		<servlet-class>com.cs336.pkg.DeleteReservationController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteReservationController</servlet-name>
+		<url-pattern>/DeleteReservationController</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
