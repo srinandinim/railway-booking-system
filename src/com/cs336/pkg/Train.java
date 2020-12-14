@@ -8,18 +8,21 @@ public class Train {
 	
 	String transitLine;
 	int trainId;
-	String origin;
-	String destination;
+	int origin;
+	int destination;
+	String originDT;
+	String destinationDT;
 	String stops;
 	int fare;
 	
-	public Train (String line, int id, String org, String dep) {
-		transitLine = line;
-		trainId = id;
-		origin = org;
-		destination = dep;
-		stops = "";
-		fare = 0;
+	public Train(String transitLine, int trainId, int origin, int destination, String originDT, String destinationDT) {
+		super();
+		this.transitLine = transitLine;
+		this.trainId = trainId;
+		this.origin = origin;
+		this.destination = destination;
+		this.originDT = originDT;
+		this.destinationDT = destinationDT;
 	}
 	
 	public String getTransitLine() {
@@ -34,17 +37,17 @@ public class Train {
 	public void setTrainId(int train_id) {
 		this.trainId = train_id;
 	}
-	public String getOrigin() {
-		return origin;
+	public String getOriginDT() {
+		return originDT;
 	}
-	public void setOrigin(String origin) {
-		this.origin = origin;
+	public void getOriginDT(String originDT) {
+		this.originDT = originDT;
 	}
-	public String getDestination() {
-		return destination;
+	public String getDestinationDT() {
+		return destinationDT;
 	}
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public void setDestinationDT(String destinationDT) {
+		this.destinationDT = destinationDT;
 	}
 	public String getStops() {
 		return stops;
@@ -60,8 +63,8 @@ public class Train {
 	}
 	
 	public long getDuration() {
-		String time1 = origin.split(" ")[1];
-		String time2 = destination.split(" ")[1];
+		String time1 = originDT.split(" ")[1];
+		String time2 = destinationDT.split(" ")[1];
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		try {
 			Date date1 = format.parse(time1);
@@ -76,6 +79,6 @@ public class Train {
 	}
 
 	public String toString() {
-		return transitLine + " " + trainId + " " + origin + " " + destination;
+		return transitLine + "//" + trainId + "//" + originDT + "//" + destinationDT + "//" + fare;
 	}
 }
