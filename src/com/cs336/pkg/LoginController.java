@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
 				System.out.println(nameResult.getString("first_name"));
 				session.setAttribute("name", nameResult.getString("first_name"));
 				session.setAttribute("username", username);
+				session.setAttribute("isLoggedIn", true);
 				session.setAttribute("isAdmin", false);
 				session.setAttribute("isEmployee", false);
 				db.closeConnection(con);
