@@ -22,6 +22,7 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 </style>
 <title>Admin Page</title>
 </head>
