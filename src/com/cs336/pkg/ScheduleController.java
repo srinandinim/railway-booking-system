@@ -99,8 +99,8 @@ public class ScheduleController extends HttpServlet {
 				}
 
 				while (resultSet.next()) {
-					destOriginTrains.add(new Train(resultSet.getString(1), resultSet.getInt(2), originStationId,
-							destStationId, resultSet.getString(3), resultSet.getString(4)));
+					destOriginTrains.add(new Train(resultSet.getString(1), resultSet.getInt(2), destStationId,
+							originStationId, resultSet.getString(3), resultSet.getString(4)));
 				}
 
 				for (int i = 0; i < destOriginTrains.size(); i++) {

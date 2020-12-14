@@ -34,24 +34,7 @@ table, th, tr, td {
 	%>
 	
 	
-	<%
-		} else{
-			System.out.println("Please Log in to make reservation");
-			%> <br> <h6 class="form" style="text-align:center"> Please login to make a reservation. </h6> 
-			<br>
-	<% } %>
-	
-	<div class="center" id="deleteRes">
-		<h4>Delete an existing Reservation (make sure
-			Reservation Number matches)</h4>
-		<form action="DeleteReservationController" method="POST">
-			<input type="number" name="resNum" required>
-			<button type="submit" formmethod="POST">Delete</button>
-		</form>
-	</div>
-	<br>
-	
-	<div class="center" id="resTable">
+		<div class="center" id="resTable">
 		<h4>Your Reservations</h4>
 		<table>
 			<tr>
@@ -89,7 +72,7 @@ table, th, tr, td {
 						<td><%=customerInfoResult.getString(1)%></td>
 						<td><%=customerInfoResult.getString(2)%></td>
 						<td><%=customerInfoResult.getString(3)%></td>
-						<td><%=customerInfoResult.getString(4)%></td>
+						<td><%="$"+customerInfoResult.getDouble(4)%></td>
 						<td><%=customerInfoResult.getString(5)%></td>
 						<td><%=customerInfoResult.getString(6)%></td>
 						<td><%=customerInfoResult.getString(7)%></td>
@@ -104,9 +87,27 @@ table, th, tr, td {
 			}
 			%>
 		</table>
-	</div>
-	<br>
+		</div>
+		<br>
 	
+	
+		<div class="center" id="deleteRes">
+			<h4>Delete an existing Reservation (make sure Reservation Number matches)</h4>
+			<form action="DeleteReservationController" method="POST">
+				<input type="number" name="resNum" required>
+				<button type="submit" formmethod="POST">Delete</button>
+			</form>
+		</div>
+		<br>
+	
+	
+	
+	<%
+		} else{
+			System.out.println("Please Log in to make reservation");
+			%> <br> <h6 class="form" style="text-align:center"> Please login to make a reservation. </h6> 
+			<br>
+	<% } %>
 	
 	
 </body>

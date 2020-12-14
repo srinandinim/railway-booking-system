@@ -79,6 +79,6 @@ public class Train {
 	}
 
 	public String toString() {
-		return transitLine + "//" + trainId + "//" + originDT + "//" + destinationDT + "//" + fare;
+		return transitLine + "//" + trainId + "//" + origin + "//" + originDT + "//" + destination + "//" + destinationDT + "//" + fare;
 	}
 }
