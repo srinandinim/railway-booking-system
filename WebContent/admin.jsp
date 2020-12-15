@@ -437,18 +437,19 @@ table, th, tr, td {
 			Statement stmt = con.createStatement();
 			String bestCustomers = "SELECT transit_line, count(*) appearances FROM reservation GROUP BY transit_line ORDER BY appearances DESC LIMIT 5";
 			ResultSet result = stmt.executeQuery(bestCustomers);
-			for(int i = 0; i<5; i++){
-				%>
-				<li><% while(result.next()){ %>
-				<%=result.getString(1)%>
-				<%} %>
-				</li>
-				<%
-			}
+			
+			int count = 0;
 			while(result.next()){
 				%>
 				<li><%=result.getString(1)%></li>
 				<% 
+				count++;
+			}
+			while(count<5){
+				%>
+				<li></li>
+				<% 
+				count++;
 			}
 		} catch (Exception e){
 			System.out.println(e);

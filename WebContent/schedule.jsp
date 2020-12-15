@@ -34,7 +34,7 @@ th, td {
 					ResultSet result = stmt.executeQuery(stationNames);
 
 					while (result.next()) {
-				%><option value="<%=result.getString(1)%>"><%=result.getString(2)%></option>
+				%><option value="<%=result.getString(1)%>">Station Name: <%=result.getString(2)%>, Station ID: <%=result.getString(1)%></option>
 				<%
 					}
 				%>
@@ -45,8 +45,7 @@ th, td {
 					result = stmt.executeQuery(stationNames);
 
 				while (result.next()) {
-				%><option value="<%=result.getString(1)%>">
-					<%=result.getString(2)%></option>
+				%><option value="<%=result.getString(1)%>">Station Name: <%=result.getString(2)%>, Station ID: <%=result.getString(1)%></option>
 				<%
 					}
 
@@ -204,9 +203,9 @@ th, td {
 			<br>
 			<h3 class="form" style="text-align: center">Reserve</h3>
 			<br>
-			<% if (orgDestStd.size() > 0){ %><label for="origin-option">Origin
+			<% if (orgDestStd.size() > 0){ %><label for="origin-option">Trip 1
 				Option</label> <select id="origin-option" name="origin-option" required>
-				<option value="" selected disabled>Select Origin Option</option>
+				<option value="" selected disabled>Select Trip 1 Option</option>
 				<% 
 					for (int i = 0; i < orgDestStd.size(); i++){ %>
 				<option value="<%=orgDestStd.get(i).toString()%>"><%=i+1%></option>
@@ -214,9 +213,9 @@ th, td {
 			</select>
 			<%}%>
 			<br>
-			<% if (destOrgStd.size() > 0){ %><label for="dest-option">Destination
+			<% if (destOrgStd.size() > 0){ %><label for="dest-option">Trip 2
 				Option</label> <select id="dest-option" name="dest-option" required>
-				<option value="" selected disabled>Select Destination
+				<option value="" selected disabled>Select Trip 2
 					Option</option>
 				<%
 					for (int i = 0; i < destOrgStd.size(); i++){ %>
@@ -232,6 +231,8 @@ th, td {
 			%>
 		</form>
 	</div>
+	<br>
+	<br>
 
 	<!-- <script src= 
 	"https://code.jquery.com/jquery-2.2.4.min.js"> 

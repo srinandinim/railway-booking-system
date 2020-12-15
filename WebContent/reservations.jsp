@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*,java.text.DecimalFormat" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -72,7 +72,11 @@ table, th, tr, td {
 						<td><%=customerInfoResult.getString(1)%></td>
 						<td><%=customerInfoResult.getString(2)%></td>
 						<td><%=customerInfoResult.getString(3)%></td>
-						<td><%="$"+customerInfoResult.getDouble(4)%></td>
+						<%
+						DecimalFormat df = new DecimalFormat("#.00");
+						String display = df.format(customerInfoResult.getDouble(4));
+						%>
+						<td><%="$"+display%></td>
 						<td><%=customerInfoResult.getString(5)%></td>
 						<td><%=customerInfoResult.getString(6)%></td>
 						<td><%=customerInfoResult.getString(7)%></td>
