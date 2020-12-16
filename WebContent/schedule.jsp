@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.cs336.pkg.*"%>
 <%@ page
-	import="java.io.*,java.util.*, java.sql.*, java.text.SimpleDateFormat, java.util.Date"%>
+	import="java.io.*,java.util.*, java.sql.*, java.text.SimpleDateFormat, java.util.Date, java.text.DecimalFormat"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -11,6 +11,9 @@
 <meta charset="UTF-8" />
 <title>Train Schedules</title>
 <style>
+table {
+	width: 70%
+}
 th, td {
 	padding: 5px;
 }
@@ -87,7 +90,12 @@ th, td {
 			<%=request.getAttribute("destination")%></p>
 		<p class="form" style="text-align: center">
 			Date of Travel:
-			<%=request.getAttribute("travelDate")%></p>
+			<%
+			String travelDate = request.getAttribute("travelDate").toString();    
+			Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(travelDate);
+			String formatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(date);
+			%>
+			<%=formatDate%></p>
 		<br>
 		<%
 			if (orgDestStd.size() != 0) {
@@ -113,10 +121,19 @@ th, td {
 				<td><%=s.getTransitLine() + " #" + s.getTrainId()%></td>
 				<td><%=s.getOriginDT().substring(0, s.getOriginDT().length() - 3).split(" ")[1]%></td>
 				<td><%=s.getDestinationDT().substring(0, s.getDestinationDT().length() - 3).split(" ")[1]%></td>
-				<td><%=s.getStops()%></td>
+				<%
+				String stops = "N/A";
+				if (s.getStops() != null && !s.getStops().equals("")){
+					stops = s.getStops();
+				}
+				%>
+				<td><%=stops%></td>
 				<td><%=s.getDuration() + " min"%></td>
-				<td><%="$" + s.getFare()%></td>
-				<%-- <td><input type="radio" name="originReservation" value='<%=i%>' /></td> --%>
+				<%
+				DecimalFormat df = new DecimalFormat("#.00");
+				String display = df.format(s.getFare());
+				%>
+				<td><%="$" + display%></td>
 			</tr>
 			<%}%>
 		</table>
@@ -147,7 +164,12 @@ th, td {
 			<%=request.getAttribute("origin")%></p>
 		<p class="form" style="text-align: center">
 			Date of Travel:
-			<%=request.getAttribute("arrivalDate")%></p>
+			<%
+			String arrivalDate = request.getAttribute("arrivalDate").toString();    
+			Date arrDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalDate);
+			String arrFormatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrDate);
+			%>
+			<%=arrFormatDate%></p>
 		<br>
 		<%
 			if (destOrgStd.size() != 0) {
@@ -163,7 +185,6 @@ th, td {
 				<th><b>Stops</b></th>
 				<th onclick="sortTable(5, 'validTrainsDO')"><b>Duration</b></th>
 				<th onclick="sortTable(6, 'validTrainsDO')"><b>Fare</b></th>
-				<!-- <th><b>Reserve</b></th> -->
 			</tr>
 			<%
 				for (int i = 0; i < destOrgStd.size(); i++) {
@@ -174,10 +195,19 @@ th, td {
 				<td><%=s.getTransitLine() + " #" + s.getTrainId()%></td>
 				<td><%=s.getOriginDT().substring(0, s.getOriginDT().length() - 3).split(" ")[1]%></td>
 				<td><%=s.getDestinationDT().substring(0, s.getDestinationDT().length() - 3).split(" ")[1]%></td>
-				<td><%=s.getStops()%></td>
+				<%
+				String stops = "N/A";
+				if (s.getStops() != null && !s.getStops().equals("")){
+					stops = s.getStops();
+				}
+				%>
+				<td><%=stops%></td>
 				<td><%=s.getDuration() + " min"%></td>
-				<td><%="$" + s.getFare()%></td>
-				<!-- <td><input type="radio" name="destReservation" /></td> -->
+				<%
+				DecimalFormat df = new DecimalFormat("#.00");
+				String display = df.format(s.getFare());
+				%>
+				<td><%="$" + display%></td>
 			</tr>
 			<%}%>
 		</table>
@@ -233,27 +263,6 @@ th, td {
 	</div>
 	<br>
 	<br>
-
-	<!-- <script src= 
-	"https://code.jquery.com/jquery-2.2.4.min.js"> 
-  </script> 
-    
-    <script type="text/javascript"> 
-        
-      // Check the radio button value. 
-        $('#reserve').on('click', function() { 
-            output =  
-              $('input[name=originReservation]:checked', 
-                '#validTrainsOD').val(); 
-            
-            document.querySelector( 
-              '.output').textContent = output; 
-            console.log(output, "Hello, world!");
-            
-            document.querySelector( 
-            '.output').text(output) 
-        }); 
-    </script> -->
 	<script>
 		highlight_rowOD();
 		function highlight_rowOD() {
