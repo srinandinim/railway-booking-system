@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*,java.text.DecimalFormat" %>
+<%@ page
+	import="java.io.*,java.util.*,java.sql.*,java.text.SimpleDateFormat, java.util.Date, java.text.DecimalFormat"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -8,8 +9,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- Should move to css file later -->
 <style>
+.table {
+	width: 90%;
+}
+
+.table th, .table td {
+	padding: 5px;
+}
+
 table, th, tr, td {
 	border: 1px solid black;
 	border-right: 1px solid black;
@@ -17,12 +25,16 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
-.center {
-	text-align: center;
-	list-style-position: inside;
-	margin-left: auto;
-	margin-right: auto;
+
+#myTable tr.header {
+	background-color: #38586b !important;
+	color: #edf2f4 !important
 }
+
+#myTable tr:hover {
+	background-color: rgba(0, 162, 255, 0.263);
+}
+
 </style>
 <title>Reservations</title>
 </head>
@@ -30,23 +42,25 @@ table, th, tr, td {
 
 	<%
 		if (session.getAttribute("isLoggedIn") != null && ((boolean) session.getAttribute("isLoggedIn"))) {
-				System.out.println("hello isLoggedIn");
 	%>
-	
-	
-		<div class="center" id="resTable">
+	<div class="center" id="resTable" style="overflow-x:auto;">
+		<br>
 		<h4>Your Reservations</h4>
-		<table>
-			<tr>
+		<br>
+		<table class="table table-bordered table-striped" id="myTable">
+			<tr class="header">
 				<th>Reservation Number</th>
 				<th>Fare Type</th>
-				<th>Date made</th>
+				<th>Date Reserved</th>
 				<th>Total Fare</th>
-				<th>Origin</th> <!-- Station name-->
+				<th>Origin</th>
+				<!-- Station name-->
 				<th>Origin Departure Time</th>
-				<th>Destination</th> <!-- Station name-->
+				<th>Destination</th>
+				<!-- Station name-->
 				<th>Destination Arrival Time</th>
-				<th>Train</th> <!-- include train line and id/number -->
+				<th>Train</th>
+				<!-- include train line and id/number -->
 			</tr>
 			<%
 			
@@ -54,9 +68,7 @@ table, th, tr, td {
 			
 			if (session.getAttribute("username") != null)
 				username = (String) session.getAttribute("username");
-			
-			System.out.println(username);
-			
+						
 			try {
 				ApplicationDB db = new ApplicationDB();
 				Connection con = db.getConnection();
@@ -67,22 +79,47 @@ table, th, tr, td {
 								
 				ResultSet customerInfoResult = stmt.executeQuery(reservationQuery);
 				while (customerInfoResult.next()) {
+					String fareType = " ";
+					if (customerInfoResult.getString(2).equals("one-way")){
+						fareType = "One Way";
+					} else {
+						fareType = "Round Trip";
+					}
 			%>
-					<tr>
-						<td><%=customerInfoResult.getString(1)%></td>
-						<td><%=customerInfoResult.getString(2)%></td>
-						<td><%=customerInfoResult.getString(3)%></td>
-						<%
-						DecimalFormat df = new DecimalFormat("#.00");
-						String display = df.format(customerInfoResult.getDouble(4));
-						%>
-						<td><%="$"+display%></td>
-						<td><%=customerInfoResult.getString(5)%></td>
-						<td><%=customerInfoResult.getString(6)%></td>
-						<td><%=customerInfoResult.getString(7)%></td>
-						<td><%=customerInfoResult.getString(8)%></td>
-						<td><%=customerInfoResult.getString(9)+" #"+ customerInfoResult.getString(10)%></td>
-					</tr>
+			<tr>
+				<td><%=customerInfoResult.getString(1)%></td>
+				<td><%=fareType%></td>
+				<%
+				String reserveDateStr = customerInfoResult.getString(3);    
+				Date reserveDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(reserveDateStr);
+				String formatReserveDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(reserveDate);
+				%>
+				<td><%=formatReserveDate%></td>
+				<%
+				DecimalFormat df = new DecimalFormat("#.00");
+				String display = df.format(customerInfoResult.getDouble(4));
+				%>
+				<td><%="$"+display%></td>
+				<td><%=customerInfoResult.getString(5)%></td>
+				<%
+				String departureStr = customerInfoResult.getString(6).split(" ")[0];    
+				Date departureDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(departureStr);
+				String formatDeparture = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(departureDate);
+				String timeDeparture = customerInfoResult.getString(6).split(" ")[1];
+				formatDeparture += " " + timeDeparture.substring(0, timeDeparture.length()-3);
+				%>
+				<td><%=formatDeparture %></td>
+				<td><%=customerInfoResult.getString(7)%></td>
+				<%
+				String arrivalStr = customerInfoResult.getString(8).split(" ")[0];    
+				Date arrivalDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalStr);
+				String formatArrival = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrivalDate);
+				String timeArrival = customerInfoResult.getString(8).split(" ")[1];
+				formatArrival += " " + timeArrival.substring(0, timeArrival.length()-3);
+				%>
+				<td><%=formatArrival%></td>
+				<td><%=customerInfoResult.getString(9)+" #"+ customerInfoResult.getString(10)%></td>
+			</tr>
 			<%
 				}
 			db.closeConnection(con);
@@ -91,28 +128,31 @@ table, th, tr, td {
 			}
 			%>
 		</table>
-		</div>
-		<br>
-	
-	
-		<div class="center" id="deleteRes">
-			<h4>Delete an existing Reservation (make sure Reservation Number matches)</h4>
-			<form action="DeleteReservationController" method="POST">
-				<input type="number" name="resNum" required>
-				<button type="submit" formmethod="POST">Delete</button>
-			</form>
-		</div>
-		<br>
-	
-	
-	
+	</div>
+	<br>
+	<br>
+
+	<div class="center" id="deleteRes">
+		<h4>Delete Existing Reservation</h4>
+		<p>Please enter reservation number.</p>
+		<form class="form" action="DeleteReservationController" method="POST">
+			<input type="number" name="resNum" required>
+			<button type="submit" formmethod="POST">Delete</button>
+		</form>
+	</div>
+	<br>
+
+
+
 	<%
 		} else{
-			System.out.println("Please Log in to make reservation");
-			%> <br> <h6 class="form" style="text-align:center"> Please login to make a reservation. </h6> 
-			<br>
+			%>
+	<br>
+	<h6 class="form" style="text-align: center">Please login to make a
+		reservation.</h6>
+	<br>
 	<% } %>
-	
-	
+
+
 </body>
 </html>

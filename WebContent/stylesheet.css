@@ -2,7 +2,8 @@
 
 body {
 	background-color: #edf2f4;
-	color: #38586b;	
+	color: #38586b;
+	font-family: Tahoma, Geneva, sans-serif;
 }
 
 .navbar-brand {
@@ -17,16 +18,31 @@ body {
 	color: white !important;
 }
 
+.jumbotron {
+	background-image: url("images/home-train.jpg");
+	background-size: cover;
+	width: 100%;
+	height: 500px;
+	margin-top: 0px; /* -100px */
+	background-position: center center;
+	opacity: 80%;
+}
+
+.jumbotron h2 {
+	padding-top: 100px !important;
+	font-weight: bolder;
+	font-size: 50px;
+	font-style: oblique;
+}
+
 .form {
 	width: 300px;
 	margin: 0 auto;
 	font-family: Tahoma, Geneva, sans-serif;
-	color: #38586b;
 }
 
 .form h1 {
 	text-align: center;
-	color: #38586b;
 	font-size: 30px;
 	font-weight: 500;
 	padding: 20px 0 20px 0;
@@ -52,30 +68,12 @@ body {
 	color: #ffffff;
 }
 
-.jumbotron {
-	background-image: url("images/home-train.jpg");
-	background-size: cover;
-	width: 100%;
-	height: 500px;
-	margin-top: 0px; /* -100px */
-	background-position: center center;
-	opacity: 80%;
-}
-
-.jumbotron h2 {
-	padding-top: 100px !important;
-	font-weight: bolder;
-	font-size: 50px;
-	font-style: oblique;
-}
-
 .center {
 	text-align: center;
 	list-style-position: inside;
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 .indented-checkbox-text {
   margin-left: 2em;
