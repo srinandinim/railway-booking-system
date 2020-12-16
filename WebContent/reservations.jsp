@@ -45,7 +45,7 @@ table, th, tr, td {
 	%>
 	<div class="center" id="resTable" style="overflow-x:auto;">
 		<br>
-		<h4>Your Reservations</h4>
+		<h4>Your Future Reservations</h4>
 		<br>
 		<table class="table table-bordered table-striped" id="myTable">
 			<tr class="header">
@@ -54,13 +54,10 @@ table, th, tr, td {
 				<th>Date Reserved</th>
 				<th>Total Fare</th>
 				<th>Origin</th>
-				<!-- Station name-->
-				<th>Origin Departure Time</th>
+				<th>Origin Departure Date & Time</th>
 				<th>Destination</th>
-				<!-- Station name-->
-				<th>Destination Arrival Time</th>
+				<th>Destination Arrival Date & Time</th>
 				<th>Train</th>
-				<!-- include train line and id/number -->
 			</tr>
 			<%
 			
@@ -75,54 +72,54 @@ table, th, tr, td {
 				Statement stmt = con.createStatement();
 				
 				
-				String reservationQuery = "SELECT res.reservation_number, res.fare_type, res.date_made, res.total_fare, t1.name, res.reservation_origin_datetime, t2.name, res.reservation_destination_datetime, res.transit_line, res.train_id FROM reservation res LEFT JOIN station AS t1 ON res.reservation_origin = t1.station_id LEFT JOIN station AS t2 ON res.reservation_destination = t2.station_id WHERE res.customer_username = \""+username+"\";";
+				String reservationQuery = "SELECT res.reservation_number, res.fare_type, res.date_made, res.total_fare, t1.name, res.reservation_origin_datetime, t2.name, res.reservation_destination_datetime, res.transit_line, res.train_id FROM reservation res LEFT JOIN station AS t1 ON res.reservation_origin = t1.station_id LEFT JOIN station AS t2 ON res.reservation_destination = t2.station_id WHERE res.customer_username = \""+username+"\" and res.reservation_origin_datetime >= NOW();";
 								
 				ResultSet customerInfoResult = stmt.executeQuery(reservationQuery);
 				while (customerInfoResult.next()) {
-					String fareType = " ";
+					String fareType = " "; // to change the - to a space
 					if (customerInfoResult.getString(2).equals("one-way")){
 						fareType = "One Way";
 					} else {
 						fareType = "Round Trip";
 					}
-			%>
-			<tr>
-				<td><%=customerInfoResult.getString(1)%></td>
-				<td><%=fareType%></td>
-				<%
-				String reserveDateStr = customerInfoResult.getString(3);    
-				Date reserveDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(reserveDateStr);
-				String formatReserveDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(reserveDate);
 				%>
-				<td><%=formatReserveDate%></td>
+				<tr>
+					<td><%=customerInfoResult.getString(1)%></td>
+					<td><%=fareType%></td>
+					<%
+					String reserveDateStr = customerInfoResult.getString(3);    
+					Date reserveDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(reserveDateStr);
+					String formatReserveDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(reserveDate);
+					%>
+					<td><%=formatReserveDate%></td>
+					<%
+					DecimalFormat df = new DecimalFormat("#.00");
+					String display = df.format(customerInfoResult.getDouble(4));
+					%>
+					<td><%="$"+display%></td>
+					<td><%=customerInfoResult.getString(5)%></td>
+					<%
+					String departureStr = customerInfoResult.getString(6).split(" ")[0];    
+					Date departureDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(departureStr);
+					String formatDeparture = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(departureDate);
+					String timeDeparture = customerInfoResult.getString(6).split(" ")[1];
+					formatDeparture += " " + timeDeparture.substring(0, timeDeparture.length()-3);
+					%>
+					<td><%=formatDeparture %></td>
+					<td><%=customerInfoResult.getString(7)%></td>
+					<%
+					String arrivalStr = customerInfoResult.getString(8).split(" ")[0];    
+					Date arrivalDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalStr);
+					String formatArrival = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrivalDate);
+					String timeArrival = customerInfoResult.getString(8).split(" ")[1];
+					formatArrival += " " + timeArrival.substring(0, timeArrival.length()-3);
+					%>
+					<td><%=formatArrival%></td>
+					<td><%=customerInfoResult.getString(9)+" #"+ customerInfoResult.getString(10)%></td>
+				</tr>
 				<%
-				DecimalFormat df = new DecimalFormat("#.00");
-				String display = df.format(customerInfoResult.getDouble(4));
-				%>
-				<td><%="$"+display%></td>
-				<td><%=customerInfoResult.getString(5)%></td>
-				<%
-				String departureStr = customerInfoResult.getString(6).split(" ")[0];    
-				Date departureDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(departureStr);
-				String formatDeparture = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(departureDate);
-				String timeDeparture = customerInfoResult.getString(6).split(" ")[1];
-				formatDeparture += " " + timeDeparture.substring(0, timeDeparture.length()-3);
-				%>
-				<td><%=formatDeparture %></td>
-				<td><%=customerInfoResult.getString(7)%></td>
-				<%
-				String arrivalStr = customerInfoResult.getString(8).split(" ")[0];    
-				Date arrivalDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalStr);
-				String formatArrival = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrivalDate);
-				String timeArrival = customerInfoResult.getString(8).split(" ")[1];
-				formatArrival += " " + timeArrival.substring(0, timeArrival.length()-3);
-				%>
-				<td><%=formatArrival%></td>
-				<td><%=customerInfoResult.getString(9)+" #"+ customerInfoResult.getString(10)%></td>
-			</tr>
-			<%
 				}
-			db.closeConnection(con);
+				db.closeConnection(con);
 			} catch (Exception e) {
 			System.out.print(e);
 			}
@@ -130,6 +127,87 @@ table, th, tr, td {
 		</table>
 	</div>
 	<br>
+	
+	<div class="center" id="resTable" style="overflow-x:auto;">
+		<br>
+		<h4>Your Past Reservations</h4>
+		<br>
+		<table class="table table-bordered table-striped" id="myTable">
+			<tr class="header">
+				<th>Reservation Number</th>
+				<th>Fare Type</th>
+				<th>Date Reserved</th>
+				<th>Total Fare</th>
+				<th>Origin</th>
+				<th>Origin Departure Date & Time</th>
+				<th>Destination</th>
+				<th>Destination Arrival Date & Time</th>
+				<th>Train</th>
+			</tr>
+			<%
+				
+			// username should carry from above
+			try {
+				ApplicationDB db = new ApplicationDB();
+				Connection con = db.getConnection();
+				Statement stmt = con.createStatement();
+				
+				
+				String reservationQuery = "SELECT res.reservation_number, res.fare_type, res.date_made, res.total_fare, t1.name, res.reservation_origin_datetime, t2.name, res.reservation_destination_datetime, res.transit_line, res.train_id FROM reservation res LEFT JOIN station AS t1 ON res.reservation_origin = t1.station_id LEFT JOIN station AS t2 ON res.reservation_destination = t2.station_id WHERE res.customer_username = \""+username+"\" and res.reservation_origin_datetime < NOW();";
+								
+				ResultSet customerInfoResult = stmt.executeQuery(reservationQuery);
+				while (customerInfoResult.next()) {
+					String fareType = " "; // to change the - to a space
+					if (customerInfoResult.getString(2).equals("one-way")){
+						fareType = "One Way";
+					} else {
+						fareType = "Round Trip";
+					}
+				%>
+				<tr>
+					<td><%=customerInfoResult.getString(1)%></td>
+					<td><%=fareType%></td>
+					<%
+					String reserveDateStr = customerInfoResult.getString(3);    
+					Date reserveDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(reserveDateStr);
+					String formatReserveDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(reserveDate);
+					%>
+					<td><%=formatReserveDate%></td>
+					<%
+					DecimalFormat df = new DecimalFormat("#.00");
+					String display = df.format(customerInfoResult.getDouble(4));
+					%>
+					<td><%="$"+display%></td>
+					<td><%=customerInfoResult.getString(5)%></td>
+					<%
+					String departureStr = customerInfoResult.getString(6).split(" ")[0];    
+					Date departureDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(departureStr);
+					String formatDeparture = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(departureDate);
+					String timeDeparture = customerInfoResult.getString(6).split(" ")[1];
+					formatDeparture += " " + timeDeparture.substring(0, timeDeparture.length()-3);
+					%>
+					<td><%=formatDeparture %></td>
+					<td><%=customerInfoResult.getString(7)%></td>
+					<%
+					String arrivalStr = customerInfoResult.getString(8).split(" ")[0];    
+					Date arrivalDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalStr);
+					String formatArrival = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrivalDate);
+					String timeArrival = customerInfoResult.getString(8).split(" ")[1];
+					formatArrival += " " + timeArrival.substring(0, timeArrival.length()-3);
+					%>
+					<td><%=formatArrival%></td>
+					<td><%=customerInfoResult.getString(9)+" #"+ customerInfoResult.getString(10)%></td>
+				</tr>
+				<%
+				}
+				db.closeConnection(con);
+			} catch (Exception e) {
+			System.out.print(e);
+			}
+			%>
+		</table>
+	</div>
+	
 	<br>
 
 	<div class="center" id="deleteRes">
@@ -143,14 +221,11 @@ table, th, tr, td {
 	<br>
 
 
-
-	<%
-		} else{
-			%>
-	<br>
-	<h6 class="form" style="text-align: center">Please login to make a
-		reservation.</h6>
-	<br>
+	<% } else{ %>
+			<br>
+			<h6 class="form" style="text-align: center">Please login to make a
+				reservation.</h6>
+			<br>
 	<% } %>
 
 
