@@ -200,4 +200,18 @@
 		<servlet-name>DeleteReservationController</servlet-name>
 		<url-pattern>/DeleteReservationController</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<display-name>BestCustomerController</display-name>
+		<servlet-name>BestCustomerController</servlet-name>
+		<servlet-class>com.cs336.pkg.BestCustomerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BestCustomerController</servlet-name>
+		<url-pattern>/BestCustomerController</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 </web-app>
