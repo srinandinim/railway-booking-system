@@ -103,21 +103,6 @@ button {
 		<h4 class="subheading">Edit Customer Representative</h4>
 		<p style="margin: 0; padding: 0"> Make sure the representative's SSN matches. </p>
 		<p> If username is changed, please make sure it is unique. </p>
-		<!-- <h4>Edit an existing Representative (make sure Representative's
-			SSN matches and username is unique)</h4> -->
-		<!-- <form action="EditCustomerController" method="POST">
-			<label for="ssn">Enter the SSN of the Customer Representative you would like to modify.</label>
-			<input
-				type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)" required>
-			<br><br>
-			<input type="text" name="firstName" placeholder="First Name"
-				class="editVerify"> <input type="text" name="lastName"
-				placeholder="Last Name" class="editVerify"> 
-			<input type="text" name="username" placeholder="Username"
-				class="editVerify"> <input type="password" name="password"
-				placeholder="Password" class="editVerify">
-			<button type="submit" onclick="verifyEdits()" formmethod="POST">Edit</button>
-		</form> -->
 		<form action="EditCustomerController" method="POST">
 			<label for="ssn">Customer Representative SSN: </label>
 			<input
@@ -443,7 +428,66 @@ button {
 		}
 		%>
 	</div>
-	<div id="mostActiveTransitLines" class="padding">
+	<div class="padding" id="activeTrainLines">
+		<h4 class="subheading">5 Most Active Transit Lines</h4>
+		<form action="ActiveTrainLinesController" method="POST">
+		  <div class="row justify-content-start" >
+		    <div class="col-sm-1">
+		    	<select name="Month" required>
+					<option value="">- Month -</option>
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select> 
+			  	<p></p>
+		    </div>
+		    <div class="col-sm-1">
+		    	<select name="Year" required>
+					<option value="">- Year -</option>
+					<%
+						for (int i = 1930; i <= 2020; i++){ %>
+							<option value='<%=i%>'><%=i%></option>
+					<%	}
+					%>
+				</select>
+			  	<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	<button type="submit" formmethod="POST">Get Train Lines</button>
+			  	<p></p>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<div class="padding">
+		<%
+			if (request.getAttribute("active-transit-lines") != null) {
+				ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("active-transit-lines"); %>
+		<ol>
+		<%		for (int i = 0; i < 5; i++){
+					if (i < transitLines.size()){
+		%>
+					<li><%=transitLines.get(i)%></li>
+		<%
+				} else {%>
+					<li>N/A</li>
+		<%	
+				}
+			}
+		}
+		%>
+		</ol>
+	</div>
+	<%-- <div id="mostActiveTransitLines" class="padding">
 		<h4 class="subheading">5 Most Active Transit Lines</h4>
 		<div>Customers reserve these transit lines the most:</div>
 		<ol>
@@ -473,7 +517,7 @@ button {
 		}
 		%>
 		</ol>
-	</div>
+	</div> --%>
 	<%
 		} else {
 	%>
