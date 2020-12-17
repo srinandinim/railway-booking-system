@@ -13,11 +13,9 @@
 .table {
 	width: 90%;
 }
-
 .table th, .table td {
 	padding: 5px;
 }
-
 table, th, tr, td {
 	border: 1px solid black;
 	border-right: 1px solid black;
@@ -25,16 +23,13 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
-
 #myTable tr.header {
 	background-color: #38586b !important;
 	color: #edf2f4 !important
 }
-
 #myTable tr:hover {
 	background-color: rgba(0, 162, 255, 0.263);
 }
-
 </style>
 <title>Reservations</title>
 </head>
@@ -45,7 +40,7 @@ table, th, tr, td {
 	%>
 	<div class="center" id="resTable" style="overflow-x:auto;">
 		<br>
-		<h4>Your Future Reservations</h4>
+		<h4>Future Reservations</h4>
 		<br>
 		<table class="table table-bordered table-striped" id="myTable">
 			<tr class="header">
@@ -70,7 +65,6 @@ table, th, tr, td {
 				ApplicationDB db = new ApplicationDB();
 				Connection con = db.getConnection();
 				Statement stmt = con.createStatement();
-				
 				
 				String reservationQuery = "SELECT res.reservation_number, res.fare_type, res.date_made, res.total_fare, t1.name, res.reservation_origin_datetime, t2.name, res.reservation_destination_datetime, res.transit_line, res.train_id FROM reservation res LEFT JOIN station AS t1 ON res.reservation_origin = t1.station_id LEFT JOIN station AS t2 ON res.reservation_destination = t2.station_id WHERE res.customer_username = \""+username+"\" and res.reservation_origin_datetime >= NOW();";
 								
@@ -129,8 +123,7 @@ table, th, tr, td {
 	<br>
 	
 	<div class="center" id="resTable" style="overflow-x:auto;">
-		<br>
-		<h4>Your Past Reservations</h4>
+		<h4>Past Reservations</h4>
 		<br>
 		<table class="table table-bordered table-striped" id="myTable">
 			<tr class="header">
@@ -223,8 +216,7 @@ table, th, tr, td {
 
 	<% } else{ %>
 			<br>
-			<h6 class="form" style="text-align: center">Please login to make a
-				reservation.</h6>
+			<h6 class="form" style="text-align: center">Please login to make a reservation or view your reservations.</h6>
 			<br>
 	<% } %>
 

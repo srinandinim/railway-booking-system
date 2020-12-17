@@ -6,6 +6,15 @@ body {
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
+th, td {
+	padding: 5px;
+}
+
+tr.tableHeader {
+	background-color: #38586b !important;
+	color: #edf2f4 !important
+}
+
 .navbar-brand {
 	padding-left: 10px;
 }
@@ -75,10 +84,12 @@ body {
 	margin-right: auto;
 }
 
-.indented-checkbox-text {
-  margin-left: 2em;
-  display: block;
-  position: relative;
-  margin-top: -2.1em;
-  line-height: 1.5em;
+.padding {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.subheading {
+	font-size: 20px; 
+	font-weight:bold;
 }

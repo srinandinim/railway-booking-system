@@ -14,9 +14,6 @@
 table {
 	width: 70%
 }
-th, td {
-	padding: 5px;
-}
 </style>
 </head>
 <body>
@@ -37,7 +34,8 @@ th, td {
 					ResultSet result = stmt.executeQuery(stationNames);
 
 					while (result.next()) {
-				%><option value="<%=result.getString(1)%>">Station Name: <%=result.getString(2)%>, Station ID: <%=result.getString(1)%></option>
+				%><option value="<%=result.getString(1)%>"><!-- Station Name: -->
+					<%=result.getString(2)%><%-- , Station ID: <%=result.getString(1)%> --%></option>
 				<%
 					}
 				%>
@@ -48,7 +46,8 @@ th, td {
 					result = stmt.executeQuery(stationNames);
 
 				while (result.next()) {
-				%><option value="<%=result.getString(1)%>">Station Name: <%=result.getString(2)%>, Station ID: <%=result.getString(1)%></option>
+				%><option value="<%=result.getString(1)%>"><!-- Station Name: -->
+					<%=result.getString(2)%><%-- , Station ID: <%=result.getString(1)%> --%></option>
 				<%
 					}
 
@@ -76,11 +75,13 @@ th, td {
 	<div>
 		<%
 			ArrayList<Train> orgDestStd = new ArrayList<Train>();
-			if (request.getAttribute("org-dest-trains") != null) {
+		if (request.getAttribute("org-dest-trains") != null) {
 			orgDestStd = (ArrayList<Train>) request.getAttribute("org-dest-trains");
 		%>
 		<h3 class="form" style="text-align: center">Results</h3>
 		<br>
+		<p class="form" style="text-align: center; font-weight:650;">
+			Trip 1 </p>
 		<p class="form" style="text-align: center">
 			Origin:
 			<%=request.getAttribute("origin")%>
@@ -91,10 +92,10 @@ th, td {
 		<p class="form" style="text-align: center">
 			Date of Travel:
 			<%
-			String travelDate = request.getAttribute("travelDate").toString();    
-			Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(travelDate);
-			String formatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(date);
-			%>
+			String travelDate = request.getAttribute("travelDate").toString();
+		Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(travelDate);
+		String formatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(date);
+		%>
 			<%=formatDate%></p>
 		<br>
 		<%
@@ -102,7 +103,7 @@ th, td {
 		%>
 		<table id="validTrainsOD" border="1" width="900" align="center"
 			border-spacing="40px">
-			<tr style="text-align: center">
+			<tr class="tableHeader" style="text-align: center">
 				<th><b>Option</b></th>
 				<th><b>Train</b></th>
 				<th onclick="sortTable(2, 'validTrainsOD')"><b>Departure
@@ -117,20 +118,20 @@ th, td {
 				Train s = orgDestStd.get(i);
 			%>
 			<tr style="text-align: center">
-				<td><%=(i+1)%></td>
+				<td><%=(i + 1)%></td>
 				<td><%=s.getTransitLine() + " #" + s.getTrainId()%></td>
 				<td><%=s.getOriginDT().substring(0, s.getOriginDT().length() - 3).split(" ")[1]%></td>
 				<td><%=s.getDestinationDT().substring(0, s.getDestinationDT().length() - 3).split(" ")[1]%></td>
 				<%
-				String stops = "N/A";
-				if (s.getStops() != null && !s.getStops().equals("")){
+					String stops = "N/A";
+				if (s.getStops() != null && !s.getStops().equals("")) {
 					stops = s.getStops();
 				}
 				%>
 				<td><%=stops%></td>
 				<td><%=s.getDuration() + " min"%></td>
 				<%
-				DecimalFormat df = new DecimalFormat("#.00");
+					DecimalFormat df = new DecimalFormat("#.00");
 				String display = df.format(s.getFare());
 				%>
 				<td><%="$" + display%></td>
@@ -151,10 +152,12 @@ th, td {
 	<div>
 		<%
 			ArrayList<Train> destOrgStd = new ArrayList<Train>();
-			if (request.getAttribute("dest-org-trains") != null) {
+		if (request.getAttribute("dest-org-trains") != null) {
 			destOrgStd = (ArrayList<Train>) request.getAttribute("dest-org-trains");
 		%>
 		<br>
+		<p class="form" style="text-align: center; font-weight:650;">
+			Trip 2 </p>
 		<p class="form" style="text-align: center">
 			Origin:
 			<%=request.getAttribute("destination")%>
@@ -165,10 +168,10 @@ th, td {
 		<p class="form" style="text-align: center">
 			Date of Travel:
 			<%
-			String arrivalDate = request.getAttribute("arrivalDate").toString();    
-			Date arrDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalDate);
-			String arrFormatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrDate);
-			%>
+			String arrivalDate = request.getAttribute("arrivalDate").toString();
+		Date arrDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(arrivalDate);
+		String arrFormatDate = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH).format(arrDate);
+		%>
 			<%=arrFormatDate%></p>
 		<br>
 		<%
@@ -176,7 +179,7 @@ th, td {
 		%>
 		<table id="validTrainsDO" border="1" width="900" align="center"
 			border-spacing="40px">
-			<tr style="text-align: center">
+			<tr class="tableHeader" style="text-align: center">
 				<th><b>Option</b></th>
 				<th><b>Train</b></th>
 				<th onclick="sortTable(2, 'validTrainsDO')"><b>Departure
@@ -188,23 +191,23 @@ th, td {
 			</tr>
 			<%
 				for (int i = 0; i < destOrgStd.size(); i++) {
-					Train s = destOrgStd.get(i);
+				Train s = destOrgStd.get(i);
 			%>
 			<tr style="text-align: center">
-				<td><%=(i+1)%></td>
+				<td><%=(i + 1)%></td>
 				<td><%=s.getTransitLine() + " #" + s.getTrainId()%></td>
 				<td><%=s.getOriginDT().substring(0, s.getOriginDT().length() - 3).split(" ")[1]%></td>
 				<td><%=s.getDestinationDT().substring(0, s.getDestinationDT().length() - 3).split(" ")[1]%></td>
 				<%
-				String stops = "N/A";
-				if (s.getStops() != null && !s.getStops().equals("")){
+					String stops = "N/A";
+				if (s.getStops() != null && !s.getStops().equals("")) {
 					stops = s.getStops();
 				}
 				%>
 				<td><%=stops%></td>
 				<td><%=s.getDuration() + " min"%></td>
 				<%
-				DecimalFormat df = new DecimalFormat("#.00");
+					DecimalFormat df = new DecimalFormat("#.00");
 				String display = df.format(s.getFare());
 				%>
 				<td><%="$" + display%></td>
@@ -225,31 +228,34 @@ th, td {
 	<div class="form">
 		<form action="ReservationsController" method="POST">
 			<%
-				if ((request.getAttribute("org-dest-trains") != null
-					&& orgDestStd.size() != 0)
-					|| (request.getAttribute("dest-org-trains") != null
-					&& destOrgStd.size() != 0)) {
+				if ((request.getAttribute("org-dest-trains") != null && orgDestStd.size() != 0)
+					|| (request.getAttribute("dest-org-trains") != null && destOrgStd.size() != 0)) {
 			%>
 			<br>
 			<h3 class="form" style="text-align: center">Reserve</h3>
 			<br>
-			<% if (orgDestStd.size() > 0){ %><label for="origin-option">Trip 1
-				Option</label> <select id="origin-option" name="origin-option" required>
+			<%
+				if (orgDestStd.size() > 0) {
+			%><label for="origin-option">Trip
+				1 Option</label> <select id="origin-option" name="origin-option" required>
 				<option value="" selected disabled>Select Trip 1 Option</option>
-				<% 
-					for (int i = 0; i < orgDestStd.size(); i++){ %>
-				<option value="<%=orgDestStd.get(i).toString()%>"><%=i+1%></option>
+				<%
+					for (int i = 0; i < orgDestStd.size(); i++) {
+				%>
+				<option value="<%=orgDestStd.get(i).toString()%>"><%=i + 1%></option>
 				<%}%>
 			</select>
 			<%}%>
 			<br>
-			<% if (destOrgStd.size() > 0){ %><label for="dest-option">Trip 2
-				Option</label> <select id="dest-option" name="dest-option" required>
-				<option value="" selected disabled>Select Trip 2
-					Option</option>
+			<%
+				if (destOrgStd.size() > 0) {
+			%><label for="dest-option">Trip
+				2 Option</label> <select id="dest-option" name="dest-option" required>
+				<option value="" selected disabled>Select Trip 2 Option</option>
 				<%
-					for (int i = 0; i < destOrgStd.size(); i++){ %>
-				<option value="<%=destOrgStd.get(i).toString()%>"><%=i+1%></option>
+					for (int i = 0; i < destOrgStd.size(); i++) {
+				%>
+				<option value="<%=destOrgStd.get(i).toString()%>"><%=i + 1%></option>
 				<%}%>
 			</select>
 
@@ -266,45 +272,45 @@ th, td {
 	<script>
 		highlight_rowOD();
 		function highlight_rowOD() {
-		    var table = document.getElementById('validTrainsOD');
-		    var cells = table.getElementsByTagName('td');
-	
-		    for (var i = 0; i < cells.length; i++) {
-		        var cell = cells[i];
-		        cell.onclick = function () {
-		            var rowId = this.parentNode.rowIndex;
-		            	
-		            var rowsNotSelected = table.getElementsByTagName('tr');
-		            for (var row = 0; row < rowsNotSelected.length; row++) {
-		                rowsNotSelected[row].style.backgroundColor = "";
-		            }
-		            var rowSelected = table.getElementsByTagName('tr')[rowId];
-		            rowSelected.style.backgroundColor = "#e6e9ed";
-		        }
-		    }
+			var table = document.getElementById('validTrainsOD');
+			var cells = table.getElementsByTagName('td');
+
+			for (var i = 0; i < cells.length; i++) {
+				var cell = cells[i];
+				cell.onclick = function() {
+					var rowId = this.parentNode.rowIndex;
+
+					var rowsNotSelected = table.getElementsByTagName('tr');
+					for (var row = 0; row < rowsNotSelected.length; row++) {
+						rowsNotSelected[row].style.backgroundColor = "";
+					}
+					var rowSelected = table.getElementsByTagName('tr')[rowId];
+					rowSelected.style.backgroundColor = "#e6e9ed";
+				}
+			}
 		}
-		
+
 		highlight_rowDO();
 		function highlight_rowDO() {
-		    var table = document.getElementById('validTrainsDO');
-		    var cells = table.getElementsByTagName('td');
-	
-		    for (var i = 0; i < cells.length; i++) {
-		        var cell = cells[i];
-		        cell.onclick = function () {
-		            var rowId = this.parentNode.rowIndex;
-		            	
-		            var rowsNotSelected = table.getElementsByTagName('tr');
-		            for (var row = 0; row < rowsNotSelected.length; row++) {
-		                rowsNotSelected[row].style.backgroundColor = "";
-		            }
-		            var rowSelected = table.getElementsByTagName('tr')[rowId];
-		            rowSelected.style.backgroundColor = "#e6e9ed";
-		        }
-		    }
+			var table = document.getElementById('validTrainsDO');
+			var cells = table.getElementsByTagName('td');
+
+			for (var i = 0; i < cells.length; i++) {
+				var cell = cells[i];
+				cell.onclick = function() {
+					var rowId = this.parentNode.rowIndex;
+
+					var rowsNotSelected = table.getElementsByTagName('tr');
+					for (var row = 0; row < rowsNotSelected.length; row++) {
+						rowsNotSelected[row].style.backgroundColor = "";
+					}
+					var rowSelected = table.getElementsByTagName('tr')[rowId];
+					rowSelected.style.backgroundColor = "#e6e9ed";
+				}
+			}
 		}
 	</script>
-	
+
 	<script>
 		function sortTable(n, tblename) {
 			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
