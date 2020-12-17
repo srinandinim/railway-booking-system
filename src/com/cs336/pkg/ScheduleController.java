@@ -40,6 +40,8 @@ public class ScheduleController extends HttpServlet {
 					+ destStationId
 					+ ") dest, train_schedule WHERE BINARY origin.train_id = dest.train_id AND origin.train_id = train_schedule.train_id AND origin.dept < dest.dept AND DATE(origin.dept) = \""
 					+ travelDate + "\"";
+			
+			System.out.println(trainQuery);
 
 			ResultSet resultSet = stmt.executeQuery(trainQuery);
 			ArrayList<Train> orgDestTrains = new ArrayList<>();

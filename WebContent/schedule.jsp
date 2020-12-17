@@ -89,7 +89,7 @@ table {
 		<p class="form" style="text-align: center">
 			Destination:
 			<%=request.getAttribute("destination")%></p>
-		<p class="form" style="text-align: center">
+		<p class="form" id="firstDate" style="text-align: center">
 			Date of Travel:
 			<%
 			String travelDate = request.getAttribute("travelDate").toString();
@@ -165,7 +165,7 @@ table {
 		<p class="form" style="text-align: center">
 			Destination:
 			<%=request.getAttribute("origin")%></p>
-		<p class="form" style="text-align: center">
+		<p class="form" id="secondDate" style="text-align: center">
 			Date of Travel:
 			<%
 			String arrivalDate = request.getAttribute("arrivalDate").toString();
@@ -270,6 +270,46 @@ table {
 	<br>
 	<br>
 	<script>
+	
+		var destinationID = document.getElementById('dest-option');
+		if (destinationID != null)
+			destinationID.addEventListener('change', verifySelections, false);
+				
+		function verifySelections(){
+			
+			console.log("HI");
+			
+			var trip1option = document.getElementById("origin-option");
+			trip1option = trip1option.options[trip1option.selectedIndex].text; // gets the number selected
+			console.log(trip1option);
+			var trip2option = document.getElementById('dest-option');
+			trip2option = trip2option.options[trip2option.selectedIndex].text
+			
+			if (trip1option === "Select Trip 1 Option"){
+				alert("ERROR: Please select a Trip 1 option first");
+				document.getElementById('dest-option').value = "";
+				return;
+			}
+			
+			var table1 = document.getElementById('validTrainsOD');
+			var table2 = document.getElementById('validTrainsDO');
+			
+			var trip1ArrTime = table1.getElementsByTagName('tr')[trip1option].getElementsByTagName('td')[3].innerText;
+			var trip2DeptTime = table2.getElementsByTagName('tr')[trip2option].getElementsByTagName('td')[2].innerText;
+			
+			var date1 = (document.getElementById("firstDate").innerText).split(" ")[3];
+			var date2 = (document.getElementById("secondDate").innerText).split(" ")[3];
+			
+			var fullDate1 = new Date(date1+" "+trip1ArrTime);
+			var fullDate2 = new Date(date2+" "+trip2DeptTime);
+			
+			if (fullDate1 > fullDate2){
+				document.getElementById('dest-option').value = "";
+				alert("ERROR: Please make sure the return trip is after the first trip");
+			}
+			
+		}
+		
 		highlight_rowOD();
 		function highlight_rowOD() {
 			var table = document.getElementById('validTrainsOD');
