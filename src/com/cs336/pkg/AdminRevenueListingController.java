@@ -26,6 +26,11 @@ public class AdminRevenueListingController extends HttpServlet {
 
 		String transitLine = request.getParameter("transitLine");
 		String customerName = request.getParameter("customerName");
+		String month = request.getParameter("Month");
+		String year = request.getParameter("Year");
+		request.setAttribute("revenueMonth", month);
+		request.setAttribute("revenueYear", year);
+		String begOfMonth = year + "-" + month + "-" + "01";
 		
 		
 		Statement stmt;
@@ -33,7 +38,7 @@ public class AdminRevenueListingController extends HttpServlet {
 			stmt=con.createStatement();
 			String getSQL = null;
 			if(transitLine==null && customerName!=null) {
-				getSQL = "SELECT customer_username, sum(total_fare) sum FROM reservation GROUP BY customer_username ORDER BY sum DESC;";
+				getSQL = "SELECT customer_username, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY customer_username ORDER BY sum DESC;";
 				ResultSet result = stmt.executeQuery(getSQL);
 				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> customerNames = new ArrayList<String>();
@@ -53,7 +58,7 @@ public class AdminRevenueListingController extends HttpServlet {
 				request.setAttribute("valid-customerUsernames", customers);
 			}
 			else if(transitLine!=null && customerName==null) {
-				getSQL = "SELECT transit_line, sum(total_fare) sum FROM reservation GROUP BY transit_line ORDER BY sum DESC;";
+				getSQL = "SELECT transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY transit_line ORDER BY sum DESC;";
 				ResultSet result = stmt.executeQuery(getSQL);
 				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> transitLines = new ArrayList<String>();
@@ -65,7 +70,8 @@ public class AdminRevenueListingController extends HttpServlet {
 				request.setAttribute("valid-transitLines", transitLines);
 			}
 			else if(transitLine!=null && customerName!=null) {
-				getSQL = "SELECT customer_username, transit_line, sum(total_fare) sum FROM reservation GROUP BY customer_username, transit_line ORDER BY sum DESC;";
+				getSQL = "SELECT customer_username, transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE (reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY customer_username, transit_line ORDER BY sum DESC;";
+				System.out.println (getSQL);
 				ResultSet result = stmt.executeQuery(getSQL);
 				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> customerUsernames = new ArrayList<String>();
