@@ -395,7 +395,7 @@ button {
 				<p></p>
 		    </div>
 		    <div class="col-sm-2">
-		    	<input type="date" name="reservationDate" placeholder="Date"
+		    	<input type="date" name="reservationDate" placeholder="Date [YYYY-MM-DD]"
 				required>
 			  	<p></p>
 		    </div>

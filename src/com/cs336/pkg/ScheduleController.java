@@ -56,7 +56,7 @@ public class ScheduleController extends HttpServlet {
 				String stopQuery = "SELECT stat.name FROM stops s, station stat WHERE BINARY s.train_id ="
 						+ orgDestTrains.get(i).getTrainId() + " AND s.departure_time>\""
 						+ orgDestTrains.get(i).getOriginDT() + "\" AND s.departure_time<\""
-						+ orgDestTrains.get(i).getDestinationDT() + "\" AND s.station_id = stat.station_id";
+						+ orgDestTrains.get(i).getDestinationDT() + "\" AND s.station_id = stat.station_id ORDER BY s.departure_time";
 
 				ResultSet stopSet = stmt.executeQuery(stopQuery);
 				String allStops = "";
@@ -110,7 +110,7 @@ public class ScheduleController extends HttpServlet {
 					String stopQuery = "SELECT stat.name FROM stops s, station stat WHERE BINARY s.train_id ="
 							+ destOriginTrains.get(i).getTrainId() + " AND s.departure_time>\""
 							+ destOriginTrains.get(i).getOriginDT() + "\" AND s.departure_time<\""
-							+ destOriginTrains.get(i).getDestinationDT() + "\" AND s.station_id = stat.station_id";
+							+ destOriginTrains.get(i).getDestinationDT() + "\" AND s.station_id = stat.station_id ORDER BY s.departure_time";
 					ResultSet stopSet = stmt.executeQuery(stopQuery);
 					String allStops = "";
 					while (stopSet.next()) {

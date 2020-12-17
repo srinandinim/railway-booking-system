@@ -53,7 +53,7 @@ public class AdminRevenueListingController extends HttpServlet {
 				request.setAttribute("valid-customerUsernames", customers);
 			}
 			else if(transitLine!=null && customerName==null) {
-				getSQL = "SELECT transit_line, sum(total_fare) FROM reservation GROUP BY transit_line;";
+				getSQL = "SELECT transit_line, sum(total_fare) sum FROM reservation GROUP BY transit_line ORDER BY sum DESC;";
 				ResultSet result = stmt.executeQuery(getSQL);
 				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> transitLines = new ArrayList<String>();
@@ -105,8 +105,6 @@ public class AdminRevenueListingController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		response.sendRedirect("admin.jsp");
 	}
 
 }
