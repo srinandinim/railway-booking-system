@@ -31,14 +31,23 @@ public class CusRepReservationSearchController extends HttpServlet {
 		Statement stmt;
 		try {
 			stmt=con.createStatement();
-			String getSQL = "SELECT DISTINCT customer_username FROM reservation WHERE DATE(reservation_destination_datetime) = \'" + reservationDate + 
+				String getSQL = "SELECT DISTINCT customer_username FROM reservation WHERE DATE(reservation_destination_datetime) = \'" + reservationDate + 
 					"\' AND transit_line=\'" + transitLine + "\';";
 				ResultSet result = stmt.executeQuery(getSQL);
 				ArrayList<String> customers = new ArrayList<String>();
 				while(result.next()) {
 					customers.add(result.getString(1));
 				}
-				request.setAttribute("valid-customers", customers);
+				ArrayList<String> customerNames = new ArrayList<String>();
+				for (int i = 0; i < customers.size(); i++) {
+					getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customers.get(i) + "'";
+					result = stmt.executeQuery(getSQL);
+					while (result.next()) {
+						customerNames.add(result.getString(1) + " " + result.getString(2) + " (" + customers.get(i) + ")");
+					}
+				}
+				
+				request.setAttribute("valid-customers", customerNames);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

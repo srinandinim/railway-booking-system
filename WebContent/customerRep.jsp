@@ -426,13 +426,8 @@ button {
 		if (request.getAttribute("valid-customers") != null){ 
 			ArrayList<String> std = (ArrayList <String>) request.getAttribute("valid-customers");
 			if (std.size() > 0) {
-				String customers = "";
-				for (String s: std){
-					customers += s + ", ";
-				}
-				customers.substring(0, customers.length()-2);
 		%>
-			<p style="margin: 0; padding: 0">Customer Usernames: </p>
+			<p style="margin: 0; padding: 0">Customers: </p>
 			<ul>
 				<% for (String s : std) { %>
 					<li><%=s%></li>
