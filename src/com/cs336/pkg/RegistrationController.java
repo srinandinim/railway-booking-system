@@ -149,6 +149,9 @@ public class RegistrationController extends HttpServlet {
 		session.setAttribute("name", firstName);
 		session.setAttribute("email", email);
 		session.setAttribute("username", username);
+		session.setAttribute("isLoggedIn", true);
+		session.setAttribute("isAdmin", false);
+		session.setAttribute("isEmployee", false);
 		
 		response.sendRedirect("index.jsp");
 	}

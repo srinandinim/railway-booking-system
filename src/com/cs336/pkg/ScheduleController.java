@@ -41,8 +41,6 @@ public class ScheduleController extends HttpServlet {
 					+ ") dest, train_schedule WHERE BINARY origin.train_id = dest.train_id AND origin.train_id = train_schedule.train_id AND origin.dept < dest.dept AND DATE(origin.dept) = \""
 					+ travelDate + "\"";
 			
-			System.out.println(trainQuery);
-
 			ResultSet resultSet = stmt.executeQuery(trainQuery);
 			ArrayList<Train> orgDestTrains = new ArrayList<>();
 			if (!resultSet.isBeforeFirst()) {
@@ -90,7 +88,6 @@ public class ScheduleController extends HttpServlet {
 				if (arrivalDate == null || arrivalDate.equals("")) {
 					arrivalDate = travelDate;
 				}
-				System.out.println(arrivalDate);
 				trainQuery = "SELECT train_schedule.transit_line, origin.train_id, origin.dept, dest.dept FROM (SELECT stops.train_id train_id, stops.departure_time dept FROM stops WHERE BINARY stops.station_id="
 						+ destStationId
 						+ ") origin, (SELECT stops.train_id train_id, stops.departure_time dept FROM stops WHERE BINARY stops.station_id="

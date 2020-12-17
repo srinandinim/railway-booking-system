@@ -33,13 +33,13 @@ public class AdminRevenueListingController extends HttpServlet {
 			stmt=con.createStatement();
 			String getSQL = null;
 			if(transitLine==null && customerName!=null) {
-				getSQL = "SELECT customer_username, sum(total_fare) FROM reservation GROUP BY customer_username;";
+				getSQL = "SELECT customer_username, sum(total_fare) sum FROM reservation GROUP BY customer_username ORDER BY sum DESC;";
 				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Integer> revenues = new ArrayList<Integer>();
+				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> customerNames = new ArrayList<String>();
 				while(result.next()) {
 					customerNames.add(result.getString(1));
-					revenues.add(result.getInt(2));
+					revenues.add(result.getDouble(2));
 				}
 				ArrayList<String> customers = new ArrayList<String>();
 				for (int i = 0; i < customerNames.size(); i++) {
@@ -55,25 +55,25 @@ public class AdminRevenueListingController extends HttpServlet {
 			else if(transitLine!=null && customerName==null) {
 				getSQL = "SELECT transit_line, sum(total_fare) FROM reservation GROUP BY transit_line;";
 				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Integer> revenues = new ArrayList<Integer>();
+				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> transitLines = new ArrayList<String>();
 				while(result.next()) {
 					transitLines.add(result.getString(1));
-					revenues.add(result.getInt(2));
+					revenues.add(result.getDouble(2));
 				}
 				request.setAttribute("valid-revenues", revenues);
 				request.setAttribute("valid-transitLines", transitLines);
 			}
 			else if(transitLine!=null && customerName!=null) {
-				getSQL = "SELECT customer_username, transit_line, sum(total_fare) FROM reservation GROUP BY customer_username, transit_line;";
+				getSQL = "SELECT customer_username, transit_line, sum(total_fare) sum FROM reservation GROUP BY customer_username, transit_line ORDER BY sum DESC;";
 				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Integer> revenues = new ArrayList<Integer>();
+				ArrayList<Double> revenues = new ArrayList<Double>();
 				ArrayList<String> customerUsernames = new ArrayList<String>();
 				ArrayList<String> transitLines = new ArrayList<String>();
 				while(result.next()) {
 					customerUsernames.add(result.getString(1));
 					transitLines.add(result.getString(2));
-					revenues.add(result.getInt(3));
+					revenues.add(result.getDouble(3));
 				}
 				ArrayList<String> customers = new ArrayList<String>();
 				for (int i = 0; i < customerUsernames.size(); i++) {

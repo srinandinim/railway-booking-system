@@ -34,8 +34,8 @@ table {
 					ResultSet result = stmt.executeQuery(stationNames);
 
 					while (result.next()) {
-				%><option value="<%=result.getString(1)%>"><!-- Station Name: -->
-					<%=result.getString(2)%><%-- , Station ID: <%=result.getString(1)%> --%></option>
+				%><option value="<%=result.getString(1)%>">
+					<%=result.getString(2)%></option>
 				<%
 					}
 				%>
@@ -274,6 +274,10 @@ table {
 		var destinationID = document.getElementById('dest-option');
 		if (destinationID != null)
 			destinationID.addEventListener('change', verifySelections, false);
+		
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("travelDate")[0].setAttribute('min', today);
+		document.getElementsByName("arrivalDate")[0].setAttribute('min', today);
 				
 		function verifySelections(){
 			
