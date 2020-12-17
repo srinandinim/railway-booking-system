@@ -16,20 +16,12 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
-.center {
-	text-align: center;
-	list-style-position: inside;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 </style>
 <title>Admin Page</title>
 </head>
 <body>
 	<%
 		if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("isAdmin"))) {
-		System.out.println("hello admin");
 	%>
 	<!-- PUT EVERYTHING ADMINS SHOULD SEE IN THIS IF STATEMENT -->
 	<div class="center" id="repTable">

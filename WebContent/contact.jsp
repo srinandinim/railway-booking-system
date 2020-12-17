@@ -18,13 +18,6 @@ table, th, tr, td {
 	margin-right: auto;
 }
 
-.center {
-	text-align: center;
-	list-style-position: inside;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .search {
 	text-align: center;
 	list-style-position: inside;
@@ -74,7 +67,7 @@ table, th, tr, td {
 <body>
 	<br>
 	<div id="myContent">
-		<h4 class="center" style="font-weight:bold">Frequently Asked Questions;</h4>
+		<h4 class="center" style="font-weight:bold">Frequently Asked Questions</h4>
 		<br>
 		<input class="form-control" type="text" id="myInput"
 			placeholder="Search for a question...">
@@ -119,16 +112,16 @@ table, th, tr, td {
 		<br>
 		<!-- This only appears if employee is logged in -->
 		<div id="replyQuestion">
-			<h4 style="font-size: 20px; font-weight:bold">Reply to a Question</h4>
+			<h4 class="subheading">Reply to a Question</h4>
 			<p>Copy paste the question you'd like to respond to in the "Question"
 			box. Then, insert the answer to the question in the "Answer" box. Make
 			sure the question you're replying to already exists. You can also use
 			this form to update a previous answer.</p>
 			<form action="ReplyQuestionController" method="POST">
 				<textarea class="longInput" maxlength="255" id="question"
-					name="question" rows="5" cols="25" placeholder="Question" required></textarea>
+					name="question" rows="5" cols="24" placeholder="Question" required></textarea>
 				<textarea class="longInput" maxlength="255" id="answer" name="answer"
-					rows="5" cols="25" placeholder="Answer" required
+					rows="5" cols="24" placeholder="Answer" required
 					placeholder="Answer" required></textarea>
 				<br>
 				<button class="button" type="submit" formmethod="POST">Answer</button>
@@ -139,7 +132,7 @@ table, th, tr, td {
 
 		<br>
 		<div id="askQuestion">
-			<h4 style="font-size: 20px; font-weight:bold">New Question</h4>
+			<h4 class="subheading">New Question</h4>
 			<p> If you are question is not found above, please enter it here. A member of our staff will answer it shortly. </p>
 			<form action="ForumController" method="POST">
 				<textarea class="longInput" maxlength="255" id="question"
@@ -150,41 +143,6 @@ table, th, tr, td {
 			<br> <br>
 		</div>
 	</div>
-
-	<%-- <div class="search">
-		<h4>Search for Questions</h4>
-		<form class="search-form" action="ForumSearchBarController"
-			method="POST">
-			<input id="searchBar" name="searchBar" type="text" size="80"
-				placeholder="Search by keyword or phrase"> <input
-				type="submit" value="Submit">
-		</form>
-	</div>
-	<div id="searchResults">
-		<%
-			if (request.getAttribute("valid-questions") != null) {
-			ArrayList<String> std = (ArrayList<String>) request.getAttribute("valid-questions");
-			ArrayList<String> std1 = (ArrayList<String>) request.getAttribute("valid-answers");
-		%>
-		<table>
-			<tr>
-				<th>Questions that match your query</th>
-				<th>Answers (if answered)</th>
-			</tr>
-			<%
-				for (int i = 0; i<std.size(); i++) {
-			%>
-			<tr>
-				<td><%=std.get(i)%></td>
-				<td><%=std1.get(i)%></td>
-			</tr>
-			<%}%>
-			</table>
-			<%
-				}
-			%>
-		
-	</div> --%>
 	<br>
 
 	<script>
