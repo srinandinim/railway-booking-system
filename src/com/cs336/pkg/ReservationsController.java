@@ -49,19 +49,20 @@ public class ReservationsController extends HttpServlet {
 		String transit_line = train1[0];
 		int train_id = Integer.parseInt(train1[1]);
 		
-		//if (t2 != null && destination_datetime > train2[3]) { // if train1 destination < train2 origin time
-		//	response.sendRedirect("schedule.jsp");
-		//	return;	
-		//}
-		
 		response.sendRedirect("reservations.jsp");
-		
 		
 		try {			
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
 			
 			Statement stmt = con.createStatement();
+			
+			String checkQuery = "SELECT * FROM reservation WHERE customer_username=\"" +username+ "\" AND transit_line=\"" +transit_line+ "\" AND train_id="+train_id+" AND reservation_origin="+origin+" AND reservation_destination="+destination+" AND reservation_origin_datetime=\""+origin_datetime+"\" AND reservation_destination_datetime=\"" +destination_datetime+ "\";";
+			
+			ResultSet checkResultSet = stmt.executeQuery(checkQuery);
+			if (checkResultSet.next()) {
+				return;	
+			}
 			
 			String discountQuery = "SELECT birthday, disabled FROM customer WHERE username=\'" +username+ "\'";
 			ResultSet resultSet = stmt.executeQuery(discountQuery);
@@ -99,13 +100,20 @@ public class ReservationsController extends HttpServlet {
 				
 				total_fare = total_fare * (1-discount);
 				
+				String checkQuery2 = "SELECT * FROM reservation WHERE customer_username=\"" +username+ "\" AND transit_line=\"" +transit_line+ "\" AND train_id="+train_id+" AND reservation_origin="+origin+" AND reservation_destination="+destination+" AND reservation_origin_datetime=\""+origin_datetime+"\" AND reservation_destination_datetime=\"" +destination_datetime+ "\";";
+				
+				ResultSet checkResultSet2 = stmt.executeQuery(checkQuery2);
+				if (checkResultSet2.next()) {
+					return;	
+				}
+				
 				String insert2Query = "INSERT INTO reservation VALUES(NULL, \'" +fare_type+ "\', \'" +date_made+ "\', "+total_fare+", " +origin+ ", \'" +origin_datetime+ "\', " +destination+ ", \'" +destination_datetime+ "\', \'" +username+ "\', \'" +transit_line+ "\', " +train_id+ ");"; 
 				
 				PreparedStatement insertRes2 = con.prepareStatement(insert2Query);
 				insertRes2.executeUpdate();
 			}
 			
-						
+			
 			db.closeConnection(con);
 			
 		}
