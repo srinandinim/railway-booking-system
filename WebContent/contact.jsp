@@ -130,7 +130,7 @@ table, th, tr, td {
 			<p> If you are question is not found above, please enter it here. A member of our staff will answer it shortly. </p>
 			<form action="ForumController" method="POST">
 				<textarea class="longInput" maxlength="255" id="question"
-					name="question" rows="5" cols="50"></textarea>
+					name="question" rows="5" cols="50" required></textarea>
 				<br>
 				<input class="button" type="submit" value="Submit">
 			</form>

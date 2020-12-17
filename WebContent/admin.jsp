@@ -174,7 +174,7 @@ button {
 		    	<select name="Year" required>
 					<option value="">- Year -</option>
 					<%
-						for (int i = 1930; i <= 2020; i++){ %>
+						for (int i = 2030; i >= 1970; i--){ %>
 							<option value='<%=i%>'><%=i%></option>
 					<%	}
 					%>
@@ -276,7 +276,7 @@ button {
 				<option value="" >Select A Year</option>
 					
 					<%
-						for (int i = 1930; i <= 2020; i++){ %>
+						for (int i = 2030; i >= 1970; i--){ %>
 							<option value='<%=i%>'><%=i%></option>
 					<%	}
 					%>
@@ -408,7 +408,7 @@ button {
 			  	<select name="Year" required>
 					<option value="">- Year -</option>
 					<%
-						for (int i = 1930; i <= 2020; i++){ %>
+						for (int i = 2030; i >= 1970; i--){ %>
 							<option value='<%=i%>'><%=i%></option>
 					<%	}
 					%>
@@ -548,7 +548,7 @@ button {
 		    	<select name="Year" required>
 					<option value="">- Year -</option>
 					<%
-						for (int i = 1930; i <= 2020; i++){ %>
+						for (int i = 2030; i >= 1970; i--){ %>
 							<option value='<%=i%>'><%=i%></option>
 					<%	}
 					%>
@@ -563,18 +563,20 @@ button {
 		</form>
 	</div>
 	<div class="padding">
-	
 		<%
 			if (request.getAttribute("cusFirstName") != null){
 				String cusFirstName = (String)request.getAttribute("cusFirstName");
-				String cusLastName = (String)request.getAttribute("cusLastName");
-				String cusUsername = (String)request.getAttribute("cusUsername");
-				DecimalFormat df = new DecimalFormat("#.00");
-				String totalFare = df.format((double)request.getAttribute("totalFare"));
-				
-				%>
-				<p> The best customer for the selected month is <%=cusFirstName +" "+ cusLastName +" ("+cusUsername+") "%> who generated $<%=totalFare%> </p>
-				<%
+				if(cusFirstName.equals(""))
+					%> <p> There are no revenue generating customers for the month and year that was picked </p> <%
+				else{
+					String cusLastName = (String)request.getAttribute("cusLastName");
+					String cusUsername = (String)request.getAttribute("cusUsername");
+					DecimalFormat df = new DecimalFormat("#.00");
+					String totalFare = df.format((double)request.getAttribute("totalFare"));
+					%>
+					<p> The best customer for the selected month is <%=cusFirstName +" "+ cusLastName +" ("+cusUsername+") "%> who generated $<%=totalFare%> </p>
+					<%
+				}
 			}
 		%>
 	</div>
@@ -606,7 +608,7 @@ button {
 		    	<select name="Year" required>
 					<option value="">- Year -</option>
 					<%
-						for (int i = 1930; i <= 2020; i++){ %>
+						for (int i = 2030; i >= 1970; i--){ %>
 							<option value='<%=i%>'><%=i%></option>
 					<%	}
 					%>
@@ -620,6 +622,7 @@ button {
 		  </div>
 		</form>
 	</div>
+	
 	<div class="padding">
 		<%
 			if (request.getAttribute("active-transit-lines") != null) {
@@ -632,21 +635,19 @@ button {
 		<%
 				} else {%>
 					<li>N/A</li>
-		<%	
-				}
+		<%		}
 			}
 		}
 		%>
 		</ol>
 	</div>
 	<br>
-	<%
-		} else {
-	%>
-	<h1>You are not an admin!</h1>
-	<%
-		}
-	%>
+	
+	
+	<% } else { %>
+			<h1>You are not an admin!</h1>
+	<% 	 } %>
+	
 	<script>
 		function verifyEdits() {
 			var editVerify = document.getElementByClassName('editVerify');

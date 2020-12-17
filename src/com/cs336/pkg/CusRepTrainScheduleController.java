@@ -17,7 +17,6 @@ public class CusRepTrainScheduleController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		ApplicationDB db = new ApplicationDB();
 		Connection con = db.getConnection();
@@ -54,7 +53,6 @@ public class CusRepTrainScheduleController extends HttpServlet {
 					editTrainSchedule.executeUpdate();
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					response.sendRedirect("cusRepTrainScheduleFailed.jsp");
 					e.printStackTrace();
 					return;
@@ -84,13 +82,12 @@ public class CusRepTrainScheduleController extends HttpServlet {
 					editTrainSchedule.executeUpdate();
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					response.sendRedirect("cusRepTrainScheduleFailed.jsp");
 					e.printStackTrace();
 					return;
 				}
 			}
-			if (originStationID.length()!=0) {
+			if (originStationID != null && originStationID.length()!=0) {
 				try {
 
 					String sqlString = "UPDATE train_schedule SET origin_station_id= \'" + originStationID + "\' WHERE BINARY transit_line = \'" + transitLine
@@ -99,13 +96,12 @@ public class CusRepTrainScheduleController extends HttpServlet {
 					editTrainSchedule.executeUpdate();
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					response.sendRedirect("cusRepTrainScheduleFailed.jsp");
 					e.printStackTrace();
 					return;
 				}
 			}
-			if (destinationStationID.length()!=0) {
+			if (destinationStationID != null && destinationStationID.length()!=0) {
 				try {
 
 					String sqlString = "UPDATE train_schedule SET destination_station_id= \'" + destinationStationID + "\' WHERE BINARY transit_line = \'" + transitLine
@@ -114,7 +110,6 @@ public class CusRepTrainScheduleController extends HttpServlet {
 					editTrainSchedule.executeUpdate();
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					response.sendRedirect("cusRepTrainScheduleFailed.jsp");
 					e.printStackTrace();
 					return;
