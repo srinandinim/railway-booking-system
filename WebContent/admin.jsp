@@ -476,7 +476,6 @@ button {
 	</div>
 	<%
 		} else {
-	System.out.println("Not an admin");
 	%>
 	<h1>You are not an admin!</h1>
 	<%
