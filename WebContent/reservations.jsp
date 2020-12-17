@@ -49,9 +49,9 @@ table, th, tr, td {
 				<th>Date Reserved</th>
 				<th>Total Fare</th>
 				<th>Origin</th>
-				<th>Origin Departure Date & Time</th>
+				<th>Origin Departure Date &amp; Time</th>
 				<th>Destination</th>
-				<th>Destination Arrival Date & Time</th>
+				<th>Destination Arrival Date &amp; Time</th>
 				<th>Train</th>
 			</tr>
 			<%
