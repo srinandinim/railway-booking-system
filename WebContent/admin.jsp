@@ -382,6 +382,7 @@ button {
 			if (request.getAttribute("valid-customerUsernames") != null) {
 			ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 			ArrayList<String> customerUsernames = (ArrayList<String>) request.getAttribute("valid-customerUsernames");
+			if (revenues.size() > 0){
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -400,10 +401,14 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		if (request.getAttribute("valid-transitLines") != null) {
+			} else { %>
+				<br>
+				<p> No revenues were generated in the specified month and year </p>
+			<%}
+			} else if (request.getAttribute("valid-transitLines") != null) {
 			ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 			ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLines");
+			if (revenues.size() > 0) {
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -422,11 +427,15 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		else if (request.getAttribute("valid-customerUsernamesBoth") != null) {
+			} else { %>
+			<br>
+			<p> No revenues were generated in the specified month and year </p>
+		<% }
+			} else if (request.getAttribute("valid-customerUsernamesBoth") != null) {
 		ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 		ArrayList<String> customerUsernames = (ArrayList<String>) request.getAttribute("valid-customerUsernamesBoth");
 		ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLinesBoth");
+		if (revenues.size() > 0){
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -447,8 +456,14 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		%>
+			} else { %>
+				<br>
+				<p> No revenues were generated in the specified month and year </p>
+		<%}
+		} else {%>
+			<br>
+			<p> Please specify if you would like to view revenues by transit line or customer. </p>
+		<%} %>
 	</div>
 	<br>
 	<div id="bestCustomer" class="padding">
