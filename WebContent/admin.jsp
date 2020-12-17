@@ -516,10 +516,8 @@ button {
 				<br>
 				<p> No revenues were generated in the specified month and year </p>
 		<%}
-		} else {%>
-			<br>
-			<p> Please specify if you would like to view revenues by transit line or customer. </p>
-		<%} %>
+		} 
+		%>
 	</div>
 	<br>
 	
