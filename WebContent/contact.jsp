@@ -17,14 +17,12 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
-
 .search {
 	text-align: center;
 	list-style-position: inside;
 	margin-left: auto;
 	margin-right: auto;
 }
-
 .button {
 	width: 10%;
 	padding: 15px;
@@ -36,7 +34,6 @@ table, th, tr, td {
 	font-size: 14px;
 	color: #ffffff;
 }
-
 #myInput {
 	background-image: url('images/search.svg') !important;
 	background-position: 10px 12px;
@@ -47,17 +44,14 @@ table, th, tr, td {
 	border: 1px solid #ddd;
 	margin-bottom: 12px;
 }
-
 #myContent {
 	padding-left: 20px;
 	padding-right: 20px;
 }
-
 #questionTable thead.header {
 	background-color: #38586b !important;
 	color: #edf2f4 !important
 }
-
 #questionTable tr:hover {
 	background-color: rgba(0, 162, 255, 0.263);
 }
