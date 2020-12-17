@@ -6,6 +6,16 @@
   </welcome-file-list>
   <servlet>
     <description></description>
+    <display-name>ActiveTrainLinesController</display-name>
+    <servlet-name>ActiveTrainLinesController</servlet-name>
+    <servlet-class>com.cs336.pkg.ActiveTrainLinesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActiveTrainLinesController</servlet-name>
+    <url-pattern>/ActiveTrainLinesController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>AddCustomerController</display-name>
     <servlet-name>AddCustomerController</servlet-name>
     <servlet-class>com.cs336.pkg.AddCustomerController</servlet-class>
