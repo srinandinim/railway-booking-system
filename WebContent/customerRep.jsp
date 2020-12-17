@@ -88,22 +88,7 @@ button {
 	<div class="padding" id="addTrainSchedule">
 		<h4 class="subheading">Add New Train Schedule</h4>
 		<p style="margin: 0; padding: 0">Please make sure that Transit Line and Train ID are unique. </p>
-		<p> The departure and arrival date and time should be entered in the format: "YYYY-MM-DD HH:MM:SS"
-		 </p>
-		<!-- <form action="CusRepTrainScheduleController" method="POST">
-			<input type="text" name="newTransitLine" placeholder="Transit Line"
-				maxlength="50" required> <input type="text"
-				name="departureDateTime" placeholder="Departure Date and Time"
-				maxlength="19" required> <input type="text"
-				name="arrivalDateTime" placeholder="Arrival Date and Time"
-				maxlength="19" required> <input type="text" name="fare"
-				placeholder="Fare" class="editVerifyAdd" required> <input
-				type="text" name="originStationID" placeholder="Origin Station ID"
-				required> <input type="text" name="destinationStationID"
-				placeholder="Destination Station ID" required> <input
-				type="text" name="trainID" placeholder="Train ID" required>
-			<button type="submit" formmethod="POST">Add</button>
-		</form> -->
+		<p> The departure and arrival date and time should be entered in the format: "YYYY-MM-DD HH:MM:SS" </p>
 		<form action="CusRepTrainScheduleController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
@@ -143,51 +128,69 @@ button {
 	<div class="padding" id="editTrainSchedule">
 		<h4 class="subheading">Edit Existing Train Schedule</h4>
 		<p style="margin: 0; padding: 0">Please make sure that Transit Line and Train ID match. </p>
-		<p> The departure and arrival date and time should be entered in the format: "YYYY-MM-DD HH:MM:SS"
-		 </p>
-		<!-- <form action="CusRepTrainScheduleController" method="POST">
-			<label for="ssn">Enter the transit line and train ID of the
-				train schedule you would like to modify:</label> <input type="text"
-				name="editTransitLine" placeholder="Transit Line" maxlength="50"
-				required> <input type="text" name="trainID"
-				placeholder="Train ID" required> <br>
-			<br> <input type="text" name="departureDateTime"
-				placeholder="Departure Date and Time" maxlength="19"> <input
-				type="text" name="arrivalDateTime"
-				placeholder="Arrival Date and Time" maxlength="19"> <input
-				type="text" name="fare" placeholder="Fare"> <input
-				type="text" name="originStationID" placeholder="Origin Station ID">
-			<input type="text" name="destinationStationID"
-				placeholder="Destination Station ID">
-			<button type="submit" formmethod="POST">Edit</button>
-		</form> -->
+		<p> The departure and arrival date and time should be entered in the format: "YYYY-MM-DD HH:MM:SS" </p>
 		<form action="CusRepTrainScheduleController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
-		    	<input type="text" name="editTransitLine" placeholder="Transit Line"
-				maxlength="50" required>
-			  	<p></p>
-			  <input
-				type="text" name="originStationID" placeholder="Origin Station ID"
-				required>
+		    	<input type="text" name="editTransitLine" placeholder="Transit Line" maxlength="50" required>
+			  	<p></p>	  	
+			  	<select name="originStationID" id="originStationID">
+					<option value="" selected disabled>Select An Origin</option>
+					<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+		
+							Statement stmt = con.createStatement();
+		
+							String stationNames = "SELECT station_id, name FROM station ORDER BY name;";
+							ResultSet result = stmt.executeQuery(stationNames);
+		
+							while (result.next()) {
+								%>
+								<option value="<%=result.getString(1)%>"><%=result.getString(2)%></option>
+								<%
+							}
+							db.closeConnection(con);
+						} catch (Exception e) {
+							System.out.print(e);
+						}
+					%>
+				</select>
 				<p></p>
-				<input type="text"
-				name="departureDateTime" placeholder="Departure Date & Time"
-				maxlength="19" required>
+				<input type="text" name="departureDateTime" placeholder="Departure Date & Time" maxlength="19">
 				<p><p>
-				<input type="text" name="fare"
-				placeholder="Fare" class="editVerifyAdd" required> 
+				<input type="text" name="fare" placeholder="Fare" class="editVerifyAdd"> 
 		    </div>
+		    
 		    <div class="col-sm-2">
-		    	<input
-				type="text" name="trainID" placeholder="Train ID" required>
-			  <p></p>
-			  <input type="text" name="destinationStationID"
-				placeholder="Destination Station ID" required>
+		    	<input type="text" name="trainID" placeholder="Train ID" required>
+				<p></p>				
+				<select name="destinationStationID" id="destinationStationID">
+					<option value="" selected disabled>Select An Destination</option>
+					<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+		
+							Statement stmt = con.createStatement();
+		
+							String stationNames = "SELECT station_id, name FROM station ORDER BY name;";
+							ResultSet result = stmt.executeQuery(stationNames);
+		
+							while (result.next()) {
+								%>
+								<option value="<%=result.getString(1)%>"><%=result.getString(2)%></option>
+								<%
+							}
+							db.closeConnection(con);
+						} catch (Exception e) {
+							System.out.print(e);
+						}
+					%>
+				</select>
 				<p></p>
-			<input type="text"
-				name="arrivalDateTime" placeholder="Arrival Date & Time"
-				maxlength="19" required>
+				<input type="text" name="arrivalDateTime" placeholder="Arrival Date & Time" maxlength="19">
 				<p></p>
 				<button type="submit" formmethod="POST">Edit</button>
 			</div>
@@ -199,13 +202,7 @@ button {
 	<div class="padding" id="deleteRep">
 		<h4 class="subheading">Delete Existing Train Schedule</h4>
 		<p style="margin: 0; padding: 0">Please make sure that Transit Line and Train ID match. </p>
-		<p>Warning: Deleting an existing train schedule will also delete all stops and reservations associated with this train schedule</p>
-		<!-- <form action="CusRepTrainScheduleController" method="POST">
-			<input type="text" name="deleteTransitLine"
-				placeholder="Transit Line" maxlength="50" required> <input
-				type="text" name="trainID" placeholder="Train ID" required>
-			<button type="submit" formmethod="POST">Delete</button>
-		</form> -->
+		<p>Warning: Deleting an existing train schedule will also delete all stops associated with this train schedule</p>
 		<form action="CusRepTrainScheduleController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
@@ -225,7 +222,9 @@ button {
 		  </div>
 		</form>
 	</div>
+	
 	<br>
+	
 	<div class="padding" id="listTrainSchedules">
 		<h4 class="subheading">Search Train Schedules</h4>
 		<p>Filter train schedules by origin, destination, or normal stop.</p>
@@ -255,9 +254,9 @@ button {
 	</div>
 	
 	<div class="center" id="selectedScheduleTableList">
-		<% if (request.getAttribute("valid-schedules") !=null) { ArrayList<TrainSchedule> std =
-                            (ArrayList<TrainSchedule>) request.getAttribute("valid-schedules");
-                                %>
+		<% if (request.getAttribute("valid-schedules") !=null) { 
+				ArrayList<TrainSchedule> std = (ArrayList<TrainSchedule>) request.getAttribute("valid-schedules");
+        %>
 		<table>
 			<tr class="tableHeader">
 				<th>Stop</th>
@@ -361,22 +360,6 @@ button {
 	<div class="padding" id="customerSearch">
 		<h4 class="subheading">Search Reservations by Date</h4>
 		<p>Find all customers that have a reservation on a specified transit line on a specified date.</p>
-		<%-- <form action="CusRepReservationSearchController" method="POST">
-			<label for="transitLine">Transit Line: </label> <select
-				id="transitLine" name="transitLine" required>
-				<option value="" selected disabled>Select a Transit Line</option>
-				<% try { ApplicationDB db=new ApplicationDB(); Connection con=db.getConnection();
-                                    Statement stmt=con.createStatement(); String
-                                    originStations="SELECT DISTINCT transit_line FROM train_schedule;" ; ResultSet
-                                    result=stmt.executeQuery(originStations); while (result.next()) { %>
-				<option value="<%=result.getString(1)%>">
-					<%=result.getString(1)%>
-				</option>
-				<% } db.closeConnection(con); } catch (Exception e) { System.out.print(e); } %>
-			</select> <input type="date" name="reservationDate" placeholder="Date"
-				required>
-			<button type="submit" formmethod="POST">Get Customers</button>
-		</form> --%>
 		<form action="CusRepReservationSearchController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
@@ -406,20 +389,6 @@ button {
 		  </div>
 		</form>
 	</div>
-	<%-- <div id="customerList" class="padding">	
-		<% if (request.getAttribute("valid-customers") !=null) { ArrayList<String> std = (ArrayList
-                            <String>) request.getAttribute("valid-customers");
-                                %>
-		<div>
-			<u>Customer usernames that match your search</u>
-		</div>
-		<ul>
-			<% for (String s : std) { %>
-			<li><%=s%></li>
-			<%}%>
-		</ul>
-		<% } %>
-	</div> --%>
 	
 	<div class="padding" id="customerList">
 		<% 
