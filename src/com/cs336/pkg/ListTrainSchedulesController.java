@@ -24,50 +24,24 @@ public class ListTrainSchedulesController extends HttpServlet {
 		ApplicationDB db = new ApplicationDB();
 		Connection con = db.getConnection();
 
-		String origin = request.getParameter("Origin");
-		String destination = request.getParameter("Destination");
+		String trainStop = request.getParameter("trainStop");
+		System.out.println(trainStop);
 		
 		
 		Statement stmt;
 		try {
+			String getSql = "SELECT stops.transit_line, stops.train_ID, stops.station_id, ts.origin_station_id, ts.destination_station_id, ts.departure_datetime, ts.arrival_datetime "
+					+ "FROM train_schedule ts, stops WHERE stops.station_id = "+ trainStop +" AND ts.transit_line = stops.transit_line AND ts.train_id = stops.train_id;";
+					
 			stmt=con.createStatement();
-			String getSQL = null;
-			if(origin==null && destination!=null) {
-				getSQL = "SELECT * from train_schedule WHERE BINARY destination_station_id=\'" + destination + "\';";
-			}
-			else if(origin!=null && destination==null) {
-				getSQL = "SELECT * from train_schedule WHERE BINARY origin_station_id=\'" + origin + "\';";
-			}
-			else if(origin!=null && destination!=null) {
-				getSQL = "SELECT * from train_schedule WHERE BINARY origin_station_id=\'" + origin + "\' AND destination_station_id=\'"+ destination + "\';";
-			}
-			if(getSQL!=null) {
-				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<TrainSchedule> schedules = new ArrayList<TrainSchedule>();
-				while(result.next()) {
-					String originName = null;
-					String destinationName = null;
-					Statement stmt1 = con.createStatement();
-					
-					String getOrigin = "SELECT name FROM station WHERE BINARY station_id =" + result.getString(5) + ";";
-					ResultSet result1 = stmt1.executeQuery(getOrigin);
-					while(result1.next()) {
-						originName = result1.getString(1);
-					}
-					originName = "Station ID: " + result.getString(5) + ", Station Name: " + originName;
-					
-					String getDestination = "SELECT name FROM station WHERE BINARY station_id =" + result.getString(6) + ";";
-					ResultSet result2 = stmt1.executeQuery(getDestination);
-					while(result2.next()) {
-						destinationName = result2.getString(1);
-					}
-					destinationName = "Station ID: " + result.getString(6) + ", Station Name: " + destinationName;
-					
-					schedules.add(new TrainSchedule(result.getString(1), result.getString(2),result.getString(3),result.getString(4),originName, 
-							destinationName, result.getString(7)));
+			ResultSet result = stmt.executeQuery(getSql);
+			ArrayList<TrainSchedule> schedules = new ArrayList<TrainSchedule>();
+				while(result.next()) {	
+					schedules.add(new TrainSchedule(result.getString(1), result.getString(2),result.getString(3),result.getString(4),result.getString(5), result.getString(6), result.getString(7)));	
 				}
-				request.setAttribute("valid-schedules", schedules);
-			}
+				
+
+			request.setAttribute("valid-schedules", schedules);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
