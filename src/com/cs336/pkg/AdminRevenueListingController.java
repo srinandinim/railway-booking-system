@@ -19,93 +19,99 @@ public class AdminRevenueListingController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		try {
-		ApplicationDB db = new ApplicationDB();
-		Connection con = db.getConnection();
 
-		String transitLine = request.getParameter("transitLine");
-		String customerName = request.getParameter("customerName");
-		String month = request.getParameter("Month");
-		String year = request.getParameter("Year");
-		request.setAttribute("revenueMonth", month);
-		request.setAttribute("revenueYear", year);
-		String begOfMonth = year + "-" + month + "-" + "01";
-		
-		
-		Statement stmt;
 		try {
-			stmt=con.createStatement();
-			String getSQL = null;
-			if(transitLine==null && customerName!=null) {
-				getSQL = "SELECT customer_username, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY customer_username ORDER BY sum DESC;";
-				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Double> revenues = new ArrayList<Double>();
-				ArrayList<String> customerNames = new ArrayList<String>();
-				while(result.next()) {
-					customerNames.add(result.getString(1));
-					revenues.add(result.getDouble(2));
-				}
-				ArrayList<String> customers = new ArrayList<String>();
-				for (int i = 0; i < customerNames.size(); i++) {
-					getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customerNames.get(i) + "'";
-					result = stmt.executeQuery(getSQL);
+			ApplicationDB db = new ApplicationDB();
+			Connection con = db.getConnection();
+
+			String transitLine = request.getParameter("transitLine");
+			String customerName = request.getParameter("customerName");
+			String month = request.getParameter("Month");
+			String year = request.getParameter("Year");
+			request.setAttribute("revenueMonth", month);
+			request.setAttribute("revenueYear", year);
+			String begOfMonth = year + "-" + month + "-" + "01";
+
+			Statement stmt;
+			try {
+				stmt = con.createStatement();
+				String getSQL = null;
+				if (transitLine == null && customerName != null) {
+					getSQL = "SELECT customer_username, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \""
+							+ begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth
+							+ "\") GROUP BY customer_username ORDER BY sum DESC;";
+					ResultSet result = stmt.executeQuery(getSQL);
+					ArrayList<Double> revenues = new ArrayList<Double>();
+					ArrayList<String> customerNames = new ArrayList<String>();
 					while (result.next()) {
-						customers.add(result.getString(1) + " " + result.getString(2) + " (" + customerNames.get(i) + ")");
+						customerNames.add(result.getString(1));
+						revenues.add(result.getDouble(2));
 					}
-				}
-				request.setAttribute("valid-revenues", revenues);
-				request.setAttribute("valid-customerUsernames", customers);
-			}
-			else if(transitLine!=null && customerName==null) {
-				getSQL = "SELECT transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY transit_line ORDER BY sum DESC;";
-				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Double> revenues = new ArrayList<Double>();
-				ArrayList<String> transitLines = new ArrayList<String>();
-				while(result.next()) {
-					transitLines.add(result.getString(1));
-					revenues.add(result.getDouble(2));
-				}
-				request.setAttribute("valid-revenues", revenues);
-				request.setAttribute("valid-transitLines", transitLines);
-			}
-			else if(transitLine!=null && customerName!=null) {
-				getSQL = "SELECT customer_username, transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE (reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY customer_username, transit_line ORDER BY sum DESC;";
-				System.out.println (getSQL);
-				ResultSet result = stmt.executeQuery(getSQL);
-				ArrayList<Double> revenues = new ArrayList<Double>();
-				ArrayList<String> customerUsernames = new ArrayList<String>();
-				ArrayList<String> transitLines = new ArrayList<String>();
-				while(result.next()) {
-					customerUsernames.add(result.getString(1));
-					transitLines.add(result.getString(2));
-					revenues.add(result.getDouble(3));
-				}
-				ArrayList<String> customers = new ArrayList<String>();
-				for (int i = 0; i < customerUsernames.size(); i++) {
-					if (customerUsernames.get(i) != null) {
-						getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customerUsernames.get(i) + "'";
+					ArrayList<String> customers = new ArrayList<String>();
+					for (int i = 0; i < customerNames.size(); i++) {
+						getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customerNames.get(i)
+								+ "'";
 						result = stmt.executeQuery(getSQL);
 						while (result.next()) {
-							customers.add(result.getString(1) + " " + result.getString(2) + " (" + customerUsernames.get(i) + ")");
+							customers.add(result.getString(1) + " " + result.getString(2) + " (" + customerNames.get(i)
+									+ ")");
 						}
 					}
+					request.setAttribute("valid-revenues", revenues);
+					request.setAttribute("valid-customerUsernames", customers);
+				} else if (transitLine != null && customerName == null) {
+					getSQL = "SELECT transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \""
+							+ begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth
+							+ "\") GROUP BY transit_line ORDER BY sum DESC;";
+					ResultSet result = stmt.executeQuery(getSQL);
+					ArrayList<Double> revenues = new ArrayList<Double>();
+					ArrayList<String> transitLines = new ArrayList<String>();
+					while (result.next()) {
+						transitLines.add(result.getString(1));
+						revenues.add(result.getDouble(2));
+					}
+					request.setAttribute("valid-revenues", revenues);
+					request.setAttribute("valid-transitLines", transitLines);
+				} else if (transitLine != null && customerName != null) {
+					getSQL = "SELECT customer_username, transit_line, sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \""
+							+ begOfMonth + "\" AND DATE (reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth
+							+ "\") GROUP BY customer_username, transit_line ORDER BY sum DESC;";
+					ResultSet result = stmt.executeQuery(getSQL);
+					ArrayList<Double> revenues = new ArrayList<Double>();
+					ArrayList<String> customerUsernames = new ArrayList<String>();
+					ArrayList<String> transitLines = new ArrayList<String>();
+					while (result.next()) {
+						customerUsernames.add(result.getString(1));
+						transitLines.add(result.getString(2));
+						revenues.add(result.getDouble(3));
+					}
+					ArrayList<String> customers = new ArrayList<String>();
+					for (int i = 0; i < customerUsernames.size(); i++) {
+						if (customerUsernames.get(i) != null) {
+							getSQL = "SELECT first_name, last_name FROM customer WHERE username='"
+									+ customerUsernames.get(i) + "'";
+							result = stmt.executeQuery(getSQL);
+							while (result.next()) {
+								customers.add(result.getString(1) + " " + result.getString(2) + " ("
+										+ customerUsernames.get(i) + ")");
+							}
+						}
+					}
+					request.setAttribute("valid-revenues", revenues);
+					request.setAttribute("valid-customerUsernamesBoth", customers);
+					request.setAttribute("valid-transitLinesBoth", transitLines);
 				}
-				request.setAttribute("valid-revenues", revenues);
-				request.setAttribute("valid-customerUsernamesBoth", customers);
-				request.setAttribute("valid-transitLinesBoth", transitLines);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
 			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-		rd.forward(request, response);
+			RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
+			rd.forward(request, response);
 
-		db.closeConnection(con);
+			db.closeConnection(con);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
