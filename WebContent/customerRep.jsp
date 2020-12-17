@@ -228,39 +228,7 @@ button {
 	<br>
 	<div class="padding" id="listTrainSchedules">
 		<h4 class="subheading">Search Train Schedules</h4>
-		<p>Filter train schedules by stop</p>
-		<!-- <h4>Search Train Schedules</h4>
-		<div>Filter train schedules by origin, destination, or both
-			(meaning results where the origin AND destination match). Must choose
-			at least one.</div> -->
-		<%-- <form action="ListTrainSchedulesController" method="POST">
-			<label for="Origin">Origin: </label> <select id="Origin"
-				name="Origin">
-				<option value="none" selected disabled>Select an Origin
-					Station</option>
-				<% try { ApplicationDB db=new ApplicationDB(); Connection con=db.getConnection();
-                                    Statement stmt=con.createStatement(); String
-                                    originStations="SELECT station_id, name FROM station;" ; ResultSet
-                                    result=stmt.executeQuery(originStations); while (result.next()) { %>
-				<option value="<%=result.getString(1)%>">Station Name:
-					<%=result.getString(2)%>, Station ID:
-					<%=result.getString(1)%>
-				</option>
-				<% } result.close(); %>
-			</select> <label for="Destination">Destination: </label> <select
-				id="Destination" name="Destination">
-				<option value="none" selected disabled>Select a Destination
-					Station</option>
-				<% String destinationStations="SELECT station_id, name FROM station;" ;
-                                    result=stmt.executeQuery(destinationStations); while (result.next()) { %>
-				<option value="<%=result.getString(1)%>">Station Name:
-					<%=result.getString(2)%>, Station ID:
-					<%=result.getString(1)%>
-				</option>
-				<% } db.closeConnection(con); } catch (Exception e) { System.out.print(e); } %>
-			</select>
-			<button type="submit" formmethod="POST">Get Train Schedules</button>
-		</form> --%>
+		<p>Filter train schedules by origin, destination, or normal stop.</p>
 		<form action="ListTrainSchedulesController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-3">
@@ -271,16 +239,13 @@ button {
                                     Statement stmt=con.createStatement(); String
                                     originStations="SELECT station_id, name FROM station;" ; ResultSet
                                     result=stmt.executeQuery(originStations); while (result.next()) { %>
-				<option value="<%=result.getString(1)%>"><!-- Station Name: -->
-					<%=result.getString(2)%><%-- , Station ID:
-					<%=result.getString(1)%> --%>
+				<option value="<%=result.getString(1)%>">
+					<%=result.getString(2)%>
 				</option>
 				<% } result.close();} catch (Exception e) { System.out.print(e); } %>
 			</select>
 				<p></p>
 		    </div>
-		    <!--  -->
-		 
 		    <div class="col-sm-2">
 		    	<button type="submit" formmethod="POST">Get Train Schedules</button>
 			  	<p></p>
@@ -289,12 +254,12 @@ button {
 		</form>
 	</div>
 	
-	<div id="selectedScheduleTableList">
+	<div class="center" id="selectedScheduleTableList">
 		<% if (request.getAttribute("valid-schedules") !=null) { ArrayList<TrainSchedule> std =
                             (ArrayList<TrainSchedule>) request.getAttribute("valid-schedules");
                                 %>
 		<table>
-			<tr>
+			<tr class="tableHeader">
 				<th>Stop</th>
 				<th>Transit Line</th>
 				<th>Train ID</th>
@@ -302,7 +267,6 @@ button {
 				<th>Destination</th>
 				<th>Departure Datetime</th>
 				<th>Arrival Datetime</th>
-			
 			</tr>
 			<% for (TrainSchedule s : std) { %>
 			<tr>
@@ -385,8 +349,8 @@ button {
 						
 
 				%>
-				<td><%=s.getDepartureDatetime()%></td>
-				<td><%=s.getArrivalDatetime()%></td>
+				<td><%=s.getDepartureDatetime().substring(0, s.getDepartureDatetime().length()-3)%></td>
+				<td><%=s.getArrivalDatetime().substring(0, s.getArrivalDatetime().length()-3)%></td>
 			
 			</tr>
 			<%}%>
