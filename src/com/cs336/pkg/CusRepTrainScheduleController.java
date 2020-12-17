@@ -123,9 +123,19 @@ public class CusRepTrainScheduleController extends HttpServlet {
 		} else if(request.getParameter("deleteTransitLine")!=null) {
 			try {
 				String transitLine = request.getParameter("deleteTransitLine");
-				String sqlString = "DELETE FROM train_schedule WHERE BINARY transit_line = \'" + transitLine + "\' AND train_id=\'" + trainID + "\';";
+				
+				String sqlString = "DELETE FROM reservation WHERE BINARY transit_line = \'" + transitLine + "\' AND train_id=\'" + trainID + "\';";
 				PreparedStatement deleteTrainSchedule = con.prepareStatement(sqlString);
 				deleteTrainSchedule.executeUpdate();
+				
+				sqlString = "DELETE FROM stops WHERE BINARY transit_line = \'" + transitLine + "\' AND train_id=\'" + trainID + "\';";
+				deleteTrainSchedule = con.prepareStatement(sqlString);
+				deleteTrainSchedule.executeUpdate();
+				
+				sqlString = "DELETE FROM train_schedule WHERE BINARY transit_line = \'" + transitLine + "\' AND train_id=\'" + trainID + "\';";
+				deleteTrainSchedule = con.prepareStatement(sqlString);
+				deleteTrainSchedule.executeUpdate();
+				
 			} catch(SQLException e) {
 				response.sendRedirect("cusRepTrainScheduleFailed.jsp");
 				e.printStackTrace();
