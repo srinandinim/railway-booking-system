@@ -2,22 +2,24 @@ package com.cs336.pkg;
 
 public class TrainSchedule {
 	String transitLine;
+	String trainID;
+	String stopID;
+	String destinationID;
+	String originID;
 	String departureDatetime;
 	String arrivalDatetime;
-	String fare;
-	String originStationID;
-	String destinationStationID;
-	String trainID;
 
-	public TrainSchedule(String transitLine, String departureDatetime, String arrivalDatetime, String fare,
-			String originStationID, String destinationStationID, String trainID) {
+
+
+	public TrainSchedule(String transitLine, String trainID, String stopID, String originID,
+			String destinationID, String departureDatetime, String arrivalDatetime) {
 		this.transitLine = transitLine;
+		this.trainID = trainID;
+		this.stopID = stopID;
+		this.originID = originID;
+		this.destinationID = destinationID;
 		this.departureDatetime = departureDatetime;
 		this.arrivalDatetime = arrivalDatetime;
-		this.fare = fare;
-		this.originStationID = originStationID;
-		this.destinationStationID = destinationStationID;
-		this.trainID = trainID;
 	}
 
 	public String getTransitLine() {
@@ -27,6 +29,38 @@ public class TrainSchedule {
 	public void setTransitLine(String transitLine) {
 		this.transitLine = transitLine;
 	}
+	
+	public String gettrainID() {
+		return trainID;
+	}
+	public void settrainID(String trainID) {
+		this.trainID = trainID;
+	}
+	
+	public String getstopID() {
+		return stopID;
+	}
+
+	public void setstopID(String stopID) {
+		this.stopID = stopID;
+	}
+	
+	public String getOriginID() {
+		return originID;
+	}
+
+	public void setOriginID(String originID) {
+		this.originID = originID;
+	}
+	
+	public String getDestinationID() {
+		return destinationID;
+	}
+
+	public void setDestinationID(String destinationID) {
+		this.destinationID = destinationID;
+	}
+	
 
 	public String getDepartureDatetime() {
 		return departureDatetime;
@@ -44,30 +78,7 @@ public class TrainSchedule {
 		this.arrivalDatetime = arrivalDatetime;
 	}
 
-	public String getFare() {
-		return fare;
-	}
-
-	public void setFare(String fare) {
-		this.fare = fare;
-	}
-
-	public String getOriginStationID() {
-		return originStationID;
-	}
-
-	public void setOriginStationID(String originStationID) {
-		this.originStationID = originStationID;
-	}
-
-	public String getDestinationStationID() {
-		return destinationStationID;
-	}
-
-	public void setDestinationStationID(String destinationStationID) {
-		this.destinationStationID = destinationStationID;
-	}
-
+	
 	public String getTrainID() {
 		return trainID;
 	}

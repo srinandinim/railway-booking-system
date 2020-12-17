@@ -226,7 +226,7 @@ button {
 	<br>
 	<div class="padding" id="listTrainSchedules">
 		<h4 class="subheading">Search Train Schedules</h4>
-		<p>Filter train schedules by origin, destination, or both.</p>
+		<p>Filter train schedules by stop</p>
 		<!-- <h4>Search Train Schedules</h4>
 		<div>Filter train schedules by origin, destination, or both
 			(meaning results where the origin AND destination match). Must choose
@@ -262,10 +262,9 @@ button {
 		<form action="ListTrainSchedulesController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-3">
-		    	<select id="Origin"
-				name="Origin">
-				<option value="none" selected disabled>Select an Origin
-					Station</option>
+		    	<select id="trainStop"
+				name="trainStop">
+				<option value="none" selected disabled>Select a Station</option>
 				<% try { ApplicationDB db=new ApplicationDB(); Connection con=db.getConnection();
                                     Statement stmt=con.createStatement(); String
                                     originStations="SELECT station_id, name FROM station;" ; ResultSet
@@ -274,25 +273,12 @@ button {
 					<%=result.getString(2)%><%-- , Station ID:
 					<%=result.getString(1)%> --%>
 				</option>
-				<% } result.close(); %>
+				<% } result.close();} catch (Exception e) { System.out.print(e); } %>
 			</select>
 				<p></p>
 		    </div>
-		    <div class="col-sm-3">
-		    	<select
-				id="Destination" name="Destination">
-				<option value="none" selected disabled>Select a Destination
-					Station</option>
-				<% String destinationStations="SELECT station_id, name FROM station;" ;
-                                    result=stmt.executeQuery(destinationStations); while (result.next()) { %>
-				<option value="<%=result.getString(1)%>"><!-- Station Name: -->
-					<%=result.getString(2)%><%-- , Station ID:
-					<%=result.getString(1)%> --%>
-				</option>
-				<% } db.closeConnection(con); } catch (Exception e) { System.out.print(e); } %>
-			</select>
-			  	<p></p>
-		    </div>
+		    <!--  -->
+		 
 		    <div class="col-sm-2">
 		    	<button type="submit" formmethod="POST">Get Train Schedules</button>
 			  	<p></p>
@@ -307,23 +293,99 @@ button {
                                 %>
 		<table>
 			<tr>
+				<th>Stop</th>
 				<th>Transit Line</th>
+				<th>Train ID</th>
+				<th>Origin</th>
+				<th>Destination</th>
 				<th>Departure Datetime</th>
 				<th>Arrival Datetime</th>
-				<th>Fare</th>
-				<th>Origin Station</th>
-				<th>Destination Station</th>
-				<th>Train ID</th>
+			
 			</tr>
 			<% for (TrainSchedule s : std) { %>
 			<tr>
+			<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+							
+					
+							Statement stmt =con.createStatement();
+							
+							String getSql = "SELECT distinct station.name FROM station, stops WHERE station.station_id = stops.station_id AND stops.station_id = \'"+s.getstopID()+"\';";
+							ResultSet result = stmt.executeQuery(getSql);
+							
+								while(result.next()) {	
+									%>
+									<td><%=result.getString(1)%></td>
+									<%	
+								}
+								
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+
+						}
+						
+
+				%>
 				<td><%=s.getTransitLine()%></td>
+				<td><%=s.getTrainID()%></td>
+				
+				
+				<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+							
+					
+							Statement stmt =con.createStatement();
+							
+							String getSql = "SELECT name FROM station WHERE station_id = \'"+s.getOriginID()+"\';";
+							ResultSet result = stmt.executeQuery(getSql);
+							
+								while(result.next()) {	
+									%>
+									<td><%=result.getString(1)%></td>
+									<%	
+								}
+								
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+
+						}
+						
+
+				%>
+				<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+							
+					
+							Statement stmt =con.createStatement();
+							
+							String getSql = "SELECT name FROM station WHERE station_id = \'"+s.getDestinationID()+"\';";
+							ResultSet result = stmt.executeQuery(getSql);
+							
+								while(result.next()) {	
+									%>
+									<td><%=result.getString(1)%></td>
+									<%	
+								}
+								
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+
+						}
+						
+
+				%>
 				<td><%=s.getDepartureDatetime()%></td>
 				<td><%=s.getArrivalDatetime()%></td>
-				<td><%=s.getFare()%></td>
-				<td><%=s.getOriginStationID()%></td>
-				<td><%=s.getDestinationStationID()%></td>
-				<td><%=s.getTrainID()%></td>
+			
 			</tr>
 			<%}%>
 		</table>
