@@ -33,8 +33,10 @@ public class ActiveTrainLinesController extends HttpServlet {
 			Statement stmt;
 			try {
 				stmt = con.createStatement();
-				String query = "SELECT transit_line, count(*) appearances FROM reservation WHERE DATE(reservation_origin_datetime) >= \"" + begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\") GROUP BY transit_line ORDER BY appearances DESC LIMIT 5;";
-				
+				String query = "SELECT transit_line, count(*) appearances FROM reservation WHERE DATE(reservation_origin_datetime) >= \""
+						+ begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth
+						+ "\") GROUP BY transit_line ORDER BY appearances DESC LIMIT 5;";
+
 				ResultSet result = stmt.executeQuery(query);
 				ArrayList<String> transitLines = new ArrayList<>();
 				while (result.next()) {

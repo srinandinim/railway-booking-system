@@ -318,7 +318,52 @@ button {
 		%>
 	</div>
 	<br>
-	<div id="revenueList" class="padding">
+	<div class="padding" id="revenueList">
+		<h4 class="subheading">Listing of Revenue</h4>
+		<p> Please choose at least one option to sort by. </p>
+		<form action="AdminRevenueListingController" method="POST">
+		  <div class="row justify-content-start">
+		    <div class="col-sm-2">
+		    	<input type="checkbox" name="transitLine" value="transitLine">
+				<label for="transitLine">Transit Line</label>
+				<p></p>
+				<select name="Month" required>
+					<option value="">- Month -</option>
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select> 
+				<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	 <input
+				type="checkbox" name="customerName" value="customerName"> <label
+				for="customerName">Customer Name</label>
+			  	<p></p>
+			  	<select name="Year" required>
+					<option value="">- Year -</option>
+					<%
+						for (int i = 1930; i <= 2020; i++){ %>
+							<option value='<%=i%>'><%=i%></option>
+					<%	}
+					%>
+				</select>
+			  	<p></p>
+			</div>
+		  </div>
+		  <button style="width:400px" type="submit" formmethod="POST">Get Revenues</button>
+		</form>
+	</div>
+	<!-- <div id="revenueList" class="padding">
 		<h4 class="subheading">Listing of Revenue</h4>
 		<p>Please choose at least one option to sort by.</p>
 		<form action="AdminRevenueListingController" method="POST">
@@ -331,12 +376,13 @@ button {
 			<br><br>
 			<button style="width:200px" type="submit" formmethod="POST">Get Revenues</button>
 		</form>
-	</div>
+	</div> -->
 	<div class="padding" id="revenueListTable">
 		<%
 			if (request.getAttribute("valid-customerUsernames") != null) {
 			ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 			ArrayList<String> customerUsernames = (ArrayList<String>) request.getAttribute("valid-customerUsernames");
+			if (revenues.size() > 0){
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -355,10 +401,14 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		if (request.getAttribute("valid-transitLines") != null) {
+			} else { %>
+				<br>
+				<p> No revenues were generated in the specified month and year </p>
+			<%}
+			} else if (request.getAttribute("valid-transitLines") != null) {
 			ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 			ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLines");
+			if (revenues.size() > 0) {
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -377,11 +427,15 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		else if (request.getAttribute("valid-customerUsernamesBoth") != null) {
+			} else { %>
+			<br>
+			<p> No revenues were generated in the specified month and year </p>
+		<% }
+			} else if (request.getAttribute("valid-customerUsernamesBoth") != null) {
 		ArrayList<Double> revenues = (ArrayList<Double>) request.getAttribute("valid-revenues");
 		ArrayList<String> customerUsernames = (ArrayList<String>) request.getAttribute("valid-customerUsernamesBoth");
 		ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLinesBoth");
+		if (revenues.size() > 0){
 		%>
 		<table>
 			<tr class="tableHeader">
@@ -402,8 +456,14 @@ button {
 			<%}%>
 		</table>
 		<%
-			}
-		%>
+			} else { %>
+				<br>
+				<p> No revenues were generated in the specified month and year </p>
+		<%}
+		} else {%>
+			<br>
+			<p> Please specify if you would like to view revenues by transit line or customer. </p>
+		<%} %>
 	</div>
 	<br>
 	<div id="bestCustomer" class="padding">
@@ -487,37 +547,6 @@ button {
 		%>
 		</ol>
 	</div>
-	<%-- <div id="mostActiveTransitLines" class="padding">
-		<h4 class="subheading">5 Most Active Transit Lines</h4>
-		<div>Customers reserve these transit lines the most:</div>
-		<ol>
-		<%
-		try{
-			ApplicationDB db = new ApplicationDB();
-			Connection con = db.getConnection();
-			Statement stmt = con.createStatement();
-			String bestCustomers = "SELECT transit_line, count(*) appearances FROM reservation GROUP BY transit_line ORDER BY appearances DESC LIMIT 5";
-			ResultSet result = stmt.executeQuery(bestCustomers);
-			
-			int count = 0;
-			while(result.next()){
-				%>
-				<li><%=result.getString(1)%></li>
-				<% 
-				count++;
-			}
-			while(count<5){
-				%>
-				<li>N/A</li>
-				<% 
-				count++;
-			}
-		} catch (Exception e){
-			System.out.println(e);
-		}
-		%>
-		</ol>
-	</div> --%>
 	<%
 		} else {
 	%>
