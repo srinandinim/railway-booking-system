@@ -251,6 +251,37 @@ button {
 				}
 				%>
 			</select>
+			</select> 
+			  	<p></p>
+			  	<select
+				id="reservationMonth" name="reservationMonth" style="width:250px" required>
+					<option value="">Select A Month</option>
+					<option value="January">January</option>
+					<option value="February">February</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+			</select>
+			</select> 
+			  	<p></p>
+			  	<select
+				id="reservationYear" name="reservationYear" style="width:250px" required>
+				<option value="" >Select A Year</option>
+					
+					<%
+						for (int i = 1930; i <= 2020; i++){ %>
+							<option value='<%=i%>'><%=i%></option>
+					<%	}
+					%>
+			</select>
+			
 			<p></p>
 			<button style="width:250px" type="submit" formmethod="POST">Get Reservations</button>
 			  	<p></p>
@@ -292,7 +323,32 @@ button {
 			%>
 			<tr>
 				<td><%=s.getReservationNumber()%></td>
-				<td><%=s.getCustomerUsername()%></td>
+				<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+							
+					
+							Statement stmt =con.createStatement();
+							
+							String getSql = "SELECT first_name, last_name, username FROM customer WHERE username = \'"+s.getCustomerUsername()+"\';";
+							ResultSet result = stmt.executeQuery(getSql);
+							
+								while(result.next()) {	
+									%>
+									<td><%=result.getString(1)+" "+ result.getString(2)+" ("+result.getString(3)+")"%></td>
+									<%	
+								}
+								
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+
+						}
+						
+
+				%>
+				
 				<td><%=fareType%></td>
 				<td><%=s.getDateMade()%></td>
 				<td>$<%=totalFare%></td>
@@ -311,7 +367,7 @@ button {
 				<% } else if (request.getAttribute("user") != null){ %>
 					<p>The customer <%=request.getAttribute("user")%> does not have any reservations.<p>
 				<% } else { %>
-					<p>There are no reservations on the <%=request.getAttribute("transit-line")%> Line<p>
+					<p>There are no reservations on the <%=request.getAttribute("transit-line")%> Line on the specified date<p>
 			<%	}
 			}
 			}
