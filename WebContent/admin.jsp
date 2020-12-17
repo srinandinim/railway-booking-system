@@ -16,18 +16,31 @@ table, th, tr, td {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+button {
+	width: 88%;
+	padding: 2px;
+	background-color: #38586b;
+	border: 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 16px;
+	color: #ffffff;
+}
 </style>
-<title>Admin Page</title>
+<title>Admin</title>
 </head>
 <body>
 	<%
 		if (session.getAttribute("isAdmin") != null && ((boolean) session.getAttribute("isAdmin"))) {
 	%>
 	<!-- PUT EVERYTHING ADMINS SHOULD SEE IN THIS IF STATEMENT -->
-	<div class="center" id="repTable">
-		<h4>Customer Representative Table</h4>
+	<div class="center padding" id="repTable">
+		<br>
+		<h4 style="font-weight: bold">Customer Representatives</h4>
 		<table>
-			<tr>
+			<tr class="tableHeader">
 				<th>Employee SSN</th>
 				<th>First Name</th>
 				<th>Last Name</th>
@@ -59,9 +72,10 @@ table, th, tr, td {
 
 	</div>
 	<br>
-	<div class="center" id="addRep">
-		<h4>Add a new Representative (make sure username is unique)</h4>
-		<form action="AddCustomerController" method="POST">
+	<div class="padding" id="addRep">
+		<h4 class="subheading">Add a New Representative</h4>
+		<p> Please make sure that the username is unique </p>
+		<!-- <form action="AddCustomerController" method="POST">
 			<input type="text" name="firstName" placeholder="First Name" required>
 			<input type="text" name="lastName" placeholder="Last Name" required>
 			<input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)"
@@ -69,13 +83,38 @@ table, th, tr, td {
 				placeholder="Username" required> <input type="password"
 				name="password" placeholder="Password" required>
 			<button type="submit" formmethod="POST">Add</button>
+		</form> -->
+		<form action="AddCustomerController" method="POST">
+		  <div class="row justify-content-start">
+		    <div class="col-sm-2">
+		    	<input type="text" name="firstName" placeholder="First Name" required>
+			  	<p></p>
+			  	<input type="text" name="username"
+				placeholder="Username" required>
+				<p></p>
+			  	<input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)"
+				required> 
+				<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	<input type="text" name="lastName" placeholder="Last Name" required>
+			  <p></p>
+			  <input type="password"
+				name="password" placeholder="Password" required>
+				<p></p>
+				<button type="submit" formmethod="POST">Add</button>
+			</div>
+		  </div>
 		</form>
 	</div>
 	<br>
-	<div class="center" id="editRep">
-		<h4>Edit an existing Representative (make sure Representative's
-			SSN matches and username is unique)</h4>
-		<form action="EditCustomerController" method="POST">
+	<div class="padding" id="editRep">
+		<h4 class="subheading">Edit Customer Representative</h4>
+		<p style="margin: 0; padding: 0"> Make sure the representative's SSN matches. </p>
+		<p> If username is changed, please make sure it is unique. </p>
+		<!-- <h4>Edit an existing Representative (make sure Representative's
+			SSN matches and username is unique)</h4> -->
+		<!-- <form action="EditCustomerController" method="POST">
 			<label for="ssn">Enter the SSN of the Customer Representative you would like to modify.</label>
 			<input
 				type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)" required>
@@ -87,22 +126,60 @@ table, th, tr, td {
 				class="editVerify"> <input type="password" name="password"
 				placeholder="Password" class="editVerify">
 			<button type="submit" onclick="verifyEdits()" formmethod="POST">Edit</button>
+		</form> -->
+		<form action="EditCustomerController" method="POST">
+			<label for="ssn">Customer Representative SSN: </label>
+			<input
+				type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)" required>
+			<br><br>
+		  <div class="row justify-content-start">
+		    <div class="col-sm-2">
+		    	<input type="text" name="firstName" placeholder="First Name"
+				class="editVerify"> 
+			  	<p></p>
+			  	<input type="text" name="username" placeholder="Username"
+				class="editVerify">
+				<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	 <input type="text" name="lastName"
+				placeholder="Last Name" class="editVerify"> 
+			  <p></p>
+			  <input type="password" name="password"
+				placeholder="Password" class="editVerify">
+				<p></p>
+			</div>
+		  </div>
+		  <button style="width:400px" type="submit" onclick="verifyEdits()" formmethod="POST">Edit</button>
 		</form>
 	</div>
 	<br>
-	<div class="center" id="deleteRep">
-		<h4>Delete an existing Customer Representative (make sure
-			Representative's SSN matches)</h4>
-		<form action="DeleteCustomerController" method="POST">
+	<div class="padding" id="deleteRep">
+		<h4 class="subheading">Delete Current Representative</h4>
+		<p> Make sure the representative's SSN matches. </p>
+		<!-- <form action="DeleteCustomerController" method="POST">
 			<input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)"
 				required>
 			<button type="submit" formmethod="POST">Delete</button>
+		</form> -->
+		<form action="DeleteCustomerController" method="POST">
+		  <div class="row justify-content-start" >
+		    <div class="col-sm-2">
+		    	<input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)"
+				required>
+			  	<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	<button type="submit" formmethod="POST">Delete</button>
+			  	<p></p>
+		    </div>
+		  </div>
 		</form>
 	</div>
 	<br>
-	<div class="center" id="salesPerMonth">
-		<h4>Obtain Sales Report per Month</h4>
-		<div class="center">
+	<div class="padding" id="salesPerMonth">
+		<h4 class="subheading">Monthly Sales Report</h4>
+		<!-- <div class="center">
 			<form action="SalesReportsController" method="POST">
 				<select name="Month" required>
 					<option value="">- Month -</option>
@@ -214,9 +291,46 @@ table, th, tr, td {
 				</select>
 				<button type="submit" formmethod="POST">Get Sales Report</button>
 			</form>
-		</div>
+		</div> -->
+		<form action="SalesReportsController" method="POST">
+		  <div class="row justify-content-start" >
+		    <div class="col-sm-1">
+		    	<select name="Month" required>
+					<option value="">- Month -</option>
+					<option value="January">January</option>
+					<option value="February">February</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+				</select> 
+			  	<p></p>
+		    </div>
+		    <div class="col-sm-1">
+		    	<select name="Year" required>
+					<option value="">- Year -</option>
+					<%
+						for (int i = 1930; i <= 2020; i++){ %>
+							<option value='<%=i%>'><%=i%></option>
+					<%	}
+					%>
+				</select>
+			  	<p></p>
+		    </div>
+		    <div class="col-sm-2">
+		    	<button type="submit" formmethod="POST">Get Sales Report</button>
+			  	<p></p>
+		    </div>
+		  </div>
+		</form>
 	</div>
-	<div class="center" style="color: blue">
+	<div class="padding">
 		<%
 			if (request.getAttribute("salesData") != null) {
 		%>
@@ -228,11 +342,11 @@ table, th, tr, td {
 		%>
 	</div>
 	<br>
-	<div class="center" id="listReservations">
-		<h4>Reservations List</h4>
-		<div>Filter reservations by transit line, by customer name, or
-			both. Must choose at least one.</div>
-		<form action="ListReservationsController" method="POST">
+	<div class="padding" id="listReservations">
+		<h4 class="subheading">Reservations List</h4>
+		<p>Filter reservations by transit line, customer name, or
+			both.</p>
+		<%-- <form action="ListReservationsController" method="POST">
 			<label for="TransitLine">Transit Line: </label> <select
 				id="TransitLine" name="TransitLine">
 				<option value="none" selected disabled>Select A Transit
@@ -273,6 +387,56 @@ table, th, tr, td {
 				%>
 			</select>
 			<button type="submit" formmethod="POST">Get Reservations</button>
+		</form> --%>
+		<form action="ListReservationsController" method="POST">
+		  <div class="row justify-content-start" >
+		    <div class="col-sm-3">
+		    	<select
+				id="TransitLine" name="TransitLine">
+				<option value="none" selected disabled>Select A Transit
+					Line</option>
+				<%
+					try {
+					ApplicationDB db = new ApplicationDB();
+					Connection con = db.getConnection();
+					Statement stmt = con.createStatement();
+					String trainLineInformation = "SELECT distinct transit_line FROM train_schedule;";
+					ResultSet result = stmt.executeQuery(trainLineInformation);
+					while (result.next()) {
+				%><option value="<%=result.getString(1)%>">Transit Line:
+					<%=result.getString(1)%>
+				</option>
+				<%
+					}
+				result.close();
+				%>
+			</select> 
+			  	<p></p>
+			  	<select
+				id="customerUserName" name="customerUserName">
+				<option value="none" selected disabled>Select A Username</option>
+				<%
+					trainLineInformation = "SELECT username, first_name, last_name FROM customer;";
+				result = stmt.executeQuery(trainLineInformation);
+				while (result.next()) {
+				%><option value="<%=result.getString(1)%>">Username:
+					<%=result.getString(1)%>, Name:
+					<%=result.getString(2)%>
+					<%=result.getString(3)%>
+				</option>
+				<%
+					}
+				db.closeConnection(con);
+				} catch (Exception e) {
+				System.out.print(e);
+				}
+				%>
+			</select>
+			<p></p>
+			<button type="submit" formmethod="POST">Get Reservations</button>
+			  	<p></p>
+		    </div>
+		  </div>
 		</form>
 	</div>
 	<div id="reservationTableList">
@@ -317,15 +481,18 @@ table, th, tr, td {
 		%>
 	</div>
 	<br>
-	<div id="revenueList" class="center">
-		<h4>Listing of Revenue</h4>
-		<div>Please choose at least one option to sort by</div>
+	<div id="revenueList" class="padding">
+		<h4 class="subheading">Listing of Revenue</h4>
+		<p>Please choose at least one option to sort by.</p>
 		<form action="AdminRevenueListingController" method="POST">
 			<input type="checkbox" name="transitLine" value="transitLine">
-			<label for="transitLine">Sort by transit line</label> <input
+			<label for="transitLine">Transit line</label> 
+			<br>
+			<input
 				type="checkbox" name="customerName" value="customerName"> <label
-				for="customerName">Sort by customer username</label>
-			<button type="submit" formmethod="POST">Get Revenues</button>
+				for="customerName">Customer Name</label>
+			<br><br>
+			<button style="width:200px" type="submit" formmethod="POST">Get Revenues</button>
 		</form>
 	</div>
 	<div id="revenueListTable" class="center">
@@ -396,9 +563,8 @@ table, th, tr, td {
 		%>
 	</div>
 	<br>
-	<div id="bestCustomer" class="center">
-	<h4>Best Customer(s)</h4>
-	<div>The following customer(s) generated the most revenue:</div>
+	<div id="bestCustomer" class="padding">
+	<h4 class="subheading">Best Customer</h4>
 		<%
 		try{
 			ApplicationDB db = new ApplicationDB();
@@ -407,21 +573,22 @@ table, th, tr, td {
 			String bestCustomers = "SELECT customer_username FROM (SELECT customer_username, sum(total_fare)total_fare FROM reservation GROUP BY" +
 			" customer_username)r1 WHERE r1.total_fare >= all (SELECT sum(total_fare)total_fare FROM reservation GROUP BY customer_username)";
 			ResultSet result = stmt.executeQuery(bestCustomers);
+			String usernames = "";
 			while(result.next()){
-				%>
-				<div style="color: blue"><%=result.getString(1)%></div>
-				<br>
-				<% 
+				usernames+=result.getString(1) + ", ";
 			}
+			%>
+			<p> The most revenue was generated by <%=usernames.substring(0, usernames.length()-2)%> </p>
+		<%
 		} catch (Exception e){
 			System.out.println(e);
 		}
 		%>
 	</div>
-	<div id="mostActiveTransitLines" class="center">
-		<h4 align="center">5 Most Active Transit Lines</h4>
+	<div id="mostActiveTransitLines" class="padding">
+		<h4 class="subheading">5 Most Active Transit Lines</h4>
 		<div>Customers reserve these transit lines the most:</div>
-		<ol style="color: blue">
+		<ol>
 		<%
 		try{
 			ApplicationDB db = new ApplicationDB();
