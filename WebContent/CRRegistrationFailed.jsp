@@ -44,10 +44,7 @@ button {
 			<li>If all else fails, your username has already been taken. Be
 				more original.</li>
 		</ul>
-
-		<p>If you hit the return button, you can return to a registration page
-		pre-populated with your previous data.</p>
-		<button style="padding:10px" onclick="location.href='register.jsp';">Return</button>
+		<button style="padding:10px" onclick="location.href='admin.jsp';">Return</button>
 
 	</div>
 </body>

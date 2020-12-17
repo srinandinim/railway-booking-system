@@ -67,6 +67,8 @@ public class ListReservationsController extends HttpServlet {
 							result.getString(6), reservationDestination, result.getString(8),result.getString(9),result.getString(10),result.getString(11)));
 				}
 				request.setAttribute("valid-reservations", reservations);
+				request.setAttribute("transit-line", transitLine);
+				request.setAttribute("user", userName);
 			}
 			
 		} catch (SQLException e) {

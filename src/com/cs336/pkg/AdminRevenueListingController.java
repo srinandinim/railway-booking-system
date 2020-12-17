@@ -41,8 +41,16 @@ public class AdminRevenueListingController extends HttpServlet {
 					customerNames.add(result.getString(1));
 					revenues.add(result.getInt(2));
 				}
+				ArrayList<String> customers = new ArrayList<String>();
+				for (int i = 0; i < customerNames.size(); i++) {
+					getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customerNames.get(i) + "'";
+					result = stmt.executeQuery(getSQL);
+					while (result.next()) {
+						customers.add(result.getString(1) + " " + result.getString(2) + " (" + customerNames.get(i) + ")");
+					}
+				}
 				request.setAttribute("valid-revenues", revenues);
-				request.setAttribute("valid-customerUsernames", customerNames);
+				request.setAttribute("valid-customerUsernames", customers);
 			}
 			else if(transitLine!=null && customerName==null) {
 				getSQL = "SELECT transit_line, sum(total_fare) FROM reservation GROUP BY transit_line;";
@@ -67,8 +75,18 @@ public class AdminRevenueListingController extends HttpServlet {
 					transitLines.add(result.getString(2));
 					revenues.add(result.getInt(3));
 				}
+				ArrayList<String> customers = new ArrayList<String>();
+				for (int i = 0; i < customerUsernames.size(); i++) {
+					if (customerUsernames.get(i) != null) {
+						getSQL = "SELECT first_name, last_name FROM customer WHERE username='" + customerUsernames.get(i) + "'";
+						result = stmt.executeQuery(getSQL);
+						while (result.next()) {
+							customers.add(result.getString(1) + " " + result.getString(2) + " (" + customerUsernames.get(i) + ")");
+						}
+					}
+				}
 				request.setAttribute("valid-revenues", revenues);
-				request.setAttribute("valid-customerUsernamesBoth", customerUsernames);
+				request.setAttribute("valid-customerUsernamesBoth", customers);
 				request.setAttribute("valid-transitLinesBoth", transitLines);
 			}
 			

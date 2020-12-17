@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("isAdmin", false);
 				session.setAttribute("isEmployee", false);
 				db.closeConnection(con);
-				response.sendRedirect("reservations.jsp");
+				response.sendRedirect("index.jsp");
 			}
 			db.closeConnection(con);
 		}
