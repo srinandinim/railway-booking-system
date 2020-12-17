@@ -150,7 +150,7 @@ public class RegistrationController extends HttpServlet {
 		session.setAttribute("email", email);
 		session.setAttribute("username", username);
 		
-		response.sendRedirect("reservations.jsp");
+		response.sendRedirect("index.jsp");
 	}
 
 }

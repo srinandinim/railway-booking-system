@@ -13,9 +13,6 @@
 .table {
 	width: 90%;
 }
-.table th, .table td {
-	padding: 5px;
-}
 table, th, tr, td {
 	border: 1px solid black;
 	border-right: 1px solid black;

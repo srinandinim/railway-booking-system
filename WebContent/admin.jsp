@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*, java.text.SimpleDateFormat, java.util.Date, java.text.DecimalFormat"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <jsp:include page="header.jsp" />
 
@@ -51,7 +51,7 @@ button {
 				ApplicationDB db = new ApplicationDB();
 				Connection con = db.getConnection();
 				Statement stmt = con.createStatement();
-				String customerInfo = "SELECT * FROM employee;";
+				String customerInfo = "SELECT * FROM employee WHERE NOT username='admin';";
 				ResultSet customerInfoResult = stmt.executeQuery(customerInfo);
 				while (customerInfoResult.next()) {
 			%>
@@ -75,15 +75,6 @@ button {
 	<div class="padding" id="addRep">
 		<h4 class="subheading">Add a New Representative</h4>
 		<p> Please make sure that the username is unique </p>
-		<!-- <form action="AddCustomerController" method="POST">
-			<input type="text" name="firstName" placeholder="First Name" required>
-			<input type="text" name="lastName" placeholder="Last Name" required>
-			<input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)"
-				required> <input type="text" name="username"
-				placeholder="Username" required> <input type="password"
-				name="password" placeholder="Password" required>
-			<button type="submit" formmethod="POST">Add</button>
-		</form> -->
 		<form action="AddCustomerController" method="POST">
 		  <div class="row justify-content-start">
 		    <div class="col-sm-2">
@@ -439,44 +430,56 @@ button {
 		  </div>
 		</form>
 	</div>
-	<div id="reservationTableList">
+	<div class="padding" id="reservationTableList">
 		<%
 			if (request.getAttribute("valid-reservations") != null) {
 			ArrayList<Reservation> std = (ArrayList<Reservation>) request.getAttribute("valid-reservations");
+			if (std.size() > 0){
 		%>
+		<p style="margin: 0; padding: 0">Transit Line: <%=request.getAttribute("transit-line")%></p>
+		<p> Customer: <%=request.getAttribute("user") %> </p>
 		<table>
-			<tr>
-				<th>Reservation Number</th>
+			<tr class="tableHeader">
+				<th>Reservation #</th>
 				<th>Fare Type</th>
-				<th>Date Made</th>
+				<th>Date Reserved</th>
 				<th>Total Fare</th>
-				<th>Reservation Origin</th>
-				<th>Reservation Origin Datetime</th>
-				<th>Reservation Destination</th>
-				<th>Reservation Destination Datetime</th>
-				<th>Customer Username</th>
-				<th>Transit Line</th>
-				<th>Train ID</th>
+				<th>Origin</th>
+				<th>Departure Date &amp; Time</th>
+				<th>Destination</th>
+				<th>Arrival Date &amp; Time</th>
+				<th>Train #</th>
 			</tr>
 			<%
 				for (Reservation s : std) {
+					String fareType = " "; // to change the - to a space
+					if (s.getFareType().equals("one-way")){
+						fareType = "One Way";
+					} else {
+						fareType = "Round Trip";
+					}
+					DecimalFormat df = new DecimalFormat("#.00");
+					String totalFare = df.format(Double.parseDouble(s.getTotalFare()));
+					String origin = (s.getReservationOrigin().split(", Station ID:")[0]).split("Station Name:")[1];
+					String destination = (s.getReservationDestination().split(", Station ID:")[0]).split("Station Name:")[1];
 			%>
 			<tr>
 				<td><%=s.getReservationNumber()%></td>
-				<td><%=s.getFareType()%></td>
+				<td><%=fareType%></td>
 				<td><%=s.getDateMade()%></td>
-				<td><%=s.getTotalFare()%></td>
-				<td><%=s.getReservationOrigin()%></td>
-				<td><%=s.getReservationOriginDatetime()%></td>
-				<td><%=s.getReservationDestination()%></td>
-				<td><%=s.getReservationDestinationDatetime()%></td>
-				<td><%=s.getCustomerUsername()%></td>
-				<td><%=s.getTransitLine()%></td>
+				<td>$<%=totalFare%></td>
+				<td><%=origin%></td>
+				<td><%=s.getReservationOriginDatetime().substring(0, s.getReservationOriginDatetime().length()-3)%></td>
+				<td><%=destination%></td>
+				<td><%=s.getReservationDestinationDatetime().substring(0, s.getReservationDestinationDatetime().length()-3)%></td>
 				<td><%=s.getTrainId()%></td>
 			</tr>
 			<%}%>
 		</table>
 		<%
+			} else { %>
+				<p>The customer <%=request.getAttribute("user")%> does not have any reservations on the <%=request.getAttribute("transit-line")%> line<p>
+		<%	}
 			}
 		%>
 	</div>
@@ -495,15 +498,15 @@ button {
 			<button style="width:200px" type="submit" formmethod="POST">Get Revenues</button>
 		</form>
 	</div>
-	<div id="revenueListTable" class="padding">
+	<div class="padding" id="revenueListTable">
 		<%
 			if (request.getAttribute("valid-customerUsernames") != null) {
 			ArrayList<Integer> revenues = (ArrayList<Integer>) request.getAttribute("valid-revenues");
 			ArrayList<String> customerUsernames = (ArrayList<String>) request.getAttribute("valid-customerUsernames");
 		%>
 		<table>
-			<tr>
-				<th>Customer Username</th>
+			<tr class="tableHeader">
+				<th>Customer</th>
 				<th>Revenue</th>
 			</tr>
 			<%
@@ -522,7 +525,7 @@ button {
 			ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLines");
 		%>
 		<table>
-			<tr>
+			<tr class="tableHeader">
 				<th>Transit Line</th>
 				<th>Revenue</th>
 			</tr>
@@ -543,8 +546,8 @@ button {
 		ArrayList<String> transitLines = (ArrayList<String>) request.getAttribute("valid-transitLinesBoth");
 		%>
 		<table>
-			<tr>
-				<th>Customer Username</th>
+			<tr class="tableHeader">
+				<th>Customer</th>
 				<th>Transit Line</th>
 				<th>Revenue</th>
 			</tr>
@@ -606,7 +609,7 @@ button {
 			}
 			while(count<5){
 				%>
-				<li></li>
+				<li>N/A</li>
 				<% 
 				count++;
 			}

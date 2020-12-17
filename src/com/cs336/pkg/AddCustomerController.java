@@ -35,7 +35,7 @@ public class AddCustomerController extends HttpServlet {
 			ResultSet result = stmtCheckUser.executeQuery(usernameChecker);
 			boolean isValid = result.next();
 			if (isValid) {
-				response.sendRedirect("registrationFailed.jsp");
+				response.sendRedirect("CRRegistrationFailed.jsp");
 				return;
 			}
 		} catch (SQLException e) {
@@ -49,7 +49,7 @@ public class AddCustomerController extends HttpServlet {
 			ResultSet result = stmtCheckUser.executeQuery(SSNChecker);
 			boolean isValid = result.next();
 			if (isValid) {
-				response.sendRedirect("registrationFailed.jsp");
+				response.sendRedirect("CRRegistrationFailed.jsp");
 				return;
 			}
 		} catch (SQLException e) {
@@ -60,23 +60,23 @@ public class AddCustomerController extends HttpServlet {
 
 		// consider fixing later (use SQL exception?)
 		if (firstName.length() > 50) {
-			response.sendRedirect("registrationFailed.jsp");
+			response.sendRedirect("CRRegistrationFailed.jsp");
 			return;
 		}
 		if (lastName.length() > 50) {
-			response.sendRedirect("registrationFailed.jsp");
+			response.sendRedirect("CRRegistrationFailed.jsp");
 			return;
 		}
 		if (ssn.length() != 11) {
-			response.sendRedirect("registrationFailed.jsp");
+			response.sendRedirect("CRRegistrationFailed.jsp");
 			return;
 		}
 		if (username.length() > 50) {
-			response.sendRedirect("registrationFailed.jsp");
+			response.sendRedirect("CRRegistrationFailed.jsp");
 			return;
 		}
 		if (password.length() > 50) {
-			response.sendRedirect("registrationFailed.jsp");
+			response.sendRedirect("CRRegistrationFailed.jsp");
 			return;
 		}
 
