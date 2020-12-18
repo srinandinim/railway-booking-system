@@ -92,30 +92,64 @@ button {
 		<form action="CusRepTrainScheduleController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
-		    	<input type="text" name="newTransitLine" placeholder="Transit Line"
-				maxlength="50" required>
+		    	<input type="text" name="newTransitLine" placeholder="Transit Line" maxlength="50" required>
 			  	<p></p>
-			  <input
-				type="text" name="originStationID" placeholder="Origin Station ID"
-				required>
+			  	<select name="originStationID" id="originStationID">
+					<option value="" selected disabled>Select An Origin</option>
+					<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+		
+							Statement stmt = con.createStatement();
+		
+							String stationNames = "SELECT station_id, name FROM station ORDER BY name;";
+							ResultSet result = stmt.executeQuery(stationNames);
+		
+							while (result.next()) {
+								%>
+								<option value="<%=result.getString(1)%>"><%=result.getString(2)%></option>
+								<%
+							}
+							db.closeConnection(con);
+						} catch (Exception e) {
+							System.out.print(e);
+						}
+					%>
+				</select>			  	
 				<p></p>
-				<input type="text"
-				name="departureDateTime" placeholder="Departure Date & Time"
-				maxlength="19" required>
+				<input type="text" name="departureDateTime" placeholder="Departure Date & Time"	maxlength="19" required>
 				<p><p>
-				<input type="text" name="fare"
-				placeholder="Fare" class="editVerifyAdd" required> 
+				<input type="text" name="fare" placeholder="Fare" class="editVerifyAdd" required> 
 		    </div>
 		    <div class="col-sm-2">
-		    	<input
-				type="text" name="trainID" placeholder="Train ID" required>
-			  <p></p>
-			  <input type="text" name="destinationStationID"
-				placeholder="Destination Station ID" required>
+		    	<input type="text" name="trainID" placeholder="Train ID" required>
+			  	<p></p>
+			  	<select name="destinationStationID" id="destinationStationID">
+					<option value="" selected disabled>Select An Destination</option>
+					<%
+						try {
+							ApplicationDB db = new ApplicationDB();
+							Connection con = db.getConnection();
+		
+							Statement stmt = con.createStatement();
+		
+							String stationNames = "SELECT station_id, name FROM station ORDER BY name;";
+							ResultSet result = stmt.executeQuery(stationNames);
+		
+							while (result.next()) {
+								%>
+								<option value="<%=result.getString(1)%>"><%=result.getString(2)%></option>
+								<%
+							}
+							db.closeConnection(con);
+						} catch (Exception e) {
+							System.out.print(e);
+						}
+					%>
+				</select>
 				<p></p>
-			<input type="text"
-				name="arrivalDateTime" placeholder="Arrival Date & Time"
-				maxlength="19" required>
+				<input type="text" name="arrivalDateTime" placeholder="Arrival Date & Time" maxlength="19" required>
 				<p></p>
 				<button type="submit" formmethod="POST">Add</button>
 			</div>
@@ -280,29 +314,21 @@ button {
 							String getSql = "SELECT distinct station.name FROM station, stops WHERE station.station_id = stops.station_id AND stops.station_id = \'"+s.getstopID()+"\';";
 							ResultSet result = stmt.executeQuery(getSql);
 							
-								while(result.next()) {	
-									%>
-									<td><%=result.getString(1)%></td>
-									<%	
-								}
-								
+							while(result.next()) {	
+								%>
+								<td><%=result.getString(1)%></td>
+								<%	
+							}
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-
 						}
-						
-
 				%>
 				<td><%=s.getTransitLine()%></td>
 				<td><%=s.getTrainID()%></td>
-				
-				
 				<%
 						try {
 							ApplicationDB db = new ApplicationDB();
 							Connection con = db.getConnection();
-							
 					
 							Statement stmt =con.createStatement();
 							
@@ -316,18 +342,13 @@ button {
 								}
 								
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-
 						}
-						
-
 				%>
 				<%
 						try {
 							ApplicationDB db = new ApplicationDB();
 							Connection con = db.getConnection();
-							
 					
 							Statement stmt =con.createStatement();
 							
@@ -341,16 +362,11 @@ button {
 								}
 								
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-
 						}
-						
-
 				%>
 				<td><%=s.getDepartureDatetime().substring(0, s.getDepartureDatetime().length()-3)%></td>
 				<td><%=s.getArrivalDatetime().substring(0, s.getArrivalDatetime().length()-3)%></td>
-			
 			</tr>
 			<%}%>
 		</table>
@@ -363,8 +379,7 @@ button {
 		<form action="CusRepReservationSearchController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
-		    	<select
-				id="transitLine" name="transitLine" required>
+		    	<select id="transitLine" name="transitLine" required>
 				<option value="" selected disabled>Select a Transit Line</option>
 				<% try { ApplicationDB db=new ApplicationDB(); Connection con=db.getConnection();
                                     Statement stmt=con.createStatement(); String
@@ -378,8 +393,7 @@ button {
 				<p></p>
 		    </div>
 		    <div class="col-sm-2">
-		    	<input type="date" name="reservationDate" placeholder="Date [YYYY-MM-DD]"
-				required>
+		    	<input type="date" name="reservationDate" placeholder="Date [YYYY-MM-DD]" required>
 			  	<p></p>
 		    </div>
 		    <div class="col-sm-2">
