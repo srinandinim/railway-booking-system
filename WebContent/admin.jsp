@@ -418,20 +418,6 @@ button {
 		  <button style="width:400px" type="submit" formmethod="POST">Get Revenues</button>
 		</form>
 	</div>
-	<!-- <div id="revenueList" class="padding">
-		<h4 class="subheading">Listing of Revenue</h4>
-		<p>Please choose at least one option to sort by.</p>
-		<form action="AdminRevenueListingController" method="POST">
-			<input type="checkbox" name="transitLine" value="transitLine">
-			<label for="transitLine">Transit Line</label> 
-			<br>
-			<input
-				type="checkbox" name="customerName" value="customerName"> <label
-				for="customerName">Customer Name</label>
-			<br><br>
-			<button style="width:200px" type="submit" formmethod="POST">Get Revenues</button>
-		</form>
-	</div> -->
 	<div class="padding" id="revenueListTable">
 		<%
 			if (request.getAttribute("valid-customerUsernames") != null) {
