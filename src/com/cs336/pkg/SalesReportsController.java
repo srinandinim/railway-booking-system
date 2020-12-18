@@ -27,39 +27,13 @@ public class SalesReportsController extends HttpServlet {
 			String year = request.getParameter("Year");
 			request.setAttribute("salesDataMonth", month);
 			request.setAttribute("salesDataYear", year);
-			int SQLyear = Integer.valueOf(year);
-			int SQLmonth = 0;
-			if (month.equals("January")) {
-				SQLmonth = 1;
-			} else if (month.equals("February")) {
-				SQLmonth = 2;
-			} else if (month.equals("March")) {
-				SQLmonth = 3;
-			} else if (month.equals("April")) {
-				SQLmonth = 4;
-			} else if (month.equals("May")) {
-				SQLmonth = 5;
-			} else if (month.equals("June")) {
-				SQLmonth = 6;
-			} else if (month.equals("July")) {
-				SQLmonth = 7;
-			} else if (month.equals("August")) {
-				SQLmonth = 8;
-			} else if (month.equals("September")) {
-				SQLmonth = 9;
-			} else if (month.equals("October")) {
-				SQLmonth = 10;
-			} else if (month.equals("November")) {
-				SQLmonth = 11;
-			} else {
-				SQLmonth = 12;
-			}
+			String begOfMonth = year + "-" + month + "-" + "01";
 
 			Statement stmt;
 			try {
 				stmt = con.createStatement();
-				String getFareSQL = "SELECT sum(total_fare) FROM reservation WHERE BINARY MONTH(date_made)=" + SQLmonth
-						+ " AND YEAR(date_made)=" + SQLyear + ";";
+				String getFareSQL = "SELECT sum(total_fare) sum FROM reservation WHERE DATE(reservation_origin_datetime) >= \""
+						+ begOfMonth + "\" AND DATE(reservation_origin_datetime) <= LAST_DAY(\"" + begOfMonth + "\");";
 				ResultSet result = stmt.executeQuery(getFareSQL);
 				while (result.next()) {
 					if (result.getString(1) != null) {
@@ -71,7 +45,6 @@ public class SalesReportsController extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-
 			}
 
 			RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
