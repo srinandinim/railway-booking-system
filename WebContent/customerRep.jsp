@@ -236,7 +236,7 @@ button {
 	<div class="padding" id="deleteRep">
 		<h4 class="subheading">Delete Existing Train Schedule</h4>
 		<p style="margin: 0; padding: 0">Please make sure that Transit Line and Train ID match. </p>
-		<p>Warning: Deleting an existing train schedule will also delete all stops associated with this train schedule</p>
+		<p>Warning: Deleting an existing train schedule will also delete all reservations and stops associated with this train schedule</p>
 		<form action="CusRepTrainScheduleController" method="POST">
 		  <div class="row justify-content-start" >
 		    <div class="col-sm-2">
